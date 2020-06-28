@@ -1,0 +1,90 @@
+<div class="page-header mt-0 shadow p-3">
+
+  <div class="btn-group mb-0">
+    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">اقدامات</button>
+    <div class="dropdown-menu" x-placement="bottom-start"
+      style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 28px, 0px);">
+      <a class="dropdown-item" (click)="NewCategury()"><i class="fas fa-plus mr-2"></i>افزودن دسته بندی
+        جدید</a>
+
+    </div>
+  </div>
+</div>
+<div class="sortable">
+  <div class="row" >
+
+    <div class="col-md-12 col-lg-4" *ngFor="let item of list">
+      <a>
+        <div class="card text-white bg-success shadow">
+          <div class="row">
+            <a style="margin-right: 21px;" type="button" class="close" aria-label="Close" data-toggle="tooltip"
+            data-placement="top" title="حذف دسته بندی" (click)="delete(item.id)">
+              <!-- <span aria-hidden="true">×</span> -->
+              <i class="fa fa-trash"></i>
+            </a>
+            <a type="button" class="close" aria-label="Close" data-toggle="tooltip"
+            data-placement="top" title="ویرایش دسته بندی" (click)="edite(item.id)">
+              <i class="fa fa-edit"></i>
+            </a>
+          </div>
+
+          <div class="card-body">
+            <h4 class="card-title">{{item.title}}</h4>
+            <p class="card-text">{{item.discription}}</p>
+
+          </div>
+
+        </div>
+      </a>
+    </div>
+
+  </div><!-- Row -->
+</div>
+<p-dialog [(visible)]="display" class="mydialog">
+  <p-header>
+    <div *ngIf="newcategory">افزودن دسته بندی جدید</div>
+    <div *ngIf="!newcategory">ویرایش دسته بندی </div>
+  </p-header>
+  <div class="ui-fluid p-formgrid p-grid">
+    <form name="form" #f="ngForm" novalidate>
+
+      <div class="wrap-input100">
+        <input type="text" id="title" name="title"
+        required  maxlength="150" appForbiddenName="bob"
+        [(ngModel)]="datalist.title" #title="ngModel"  placeholder="عنوان"
+        [ngClass]="title.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+      </div>
+      <div class="wrap-input100">
+        <div *ngIf="title.invalid && (title.dirty || title.touched)"
+            class="text text-danger">
+          <div *ngIf="title.errors.required">
+            عنوان را وارد نمایید.
+          </div>
+
+          <div *ngIf="title.errors.maxlength">
+            حداکثر 150 کاراکتر مورد قبول میباشد.
+          </div>
+          <div *ngIf="title.errors.pattern">
+            عنوان را تصیح نمایید
+          </div>
+        </div>
+      </div>
+
+
+      <div class="wrap-input100">
+        <textarea type="text" id="discription" name="discription" class="form-control"
+        maxlength="250"  rows="4" [(ngModel)]="datalist.discription" #discription="ngModel"  placeholder="توضیحات دسته بندی"></textarea>
+      </div>
+    </form>
+
+
+  </div>
+  <p-footer>
+    <button *ngIf="newcategory" pButton type="button" [disabled]="f.form.pristine || f.form.invalid" label="افزودن"
+      class="ui-button-raised ui-button-success" (click)="onSubmit()"></button>
+    <button *ngIf="!newcategory" pButton type="button" label="ذخیره"
+      class="ui-button-raised ui-button-warning" (click)="onSubmit()"></button>
+
+  </p-footer>
+</p-dialog>

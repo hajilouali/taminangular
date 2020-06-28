@@ -1,0 +1,79 @@
+<body class="bg-gradient-primary" dir="rtl">
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-5">
+        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate class="login100-form validate-form">
+          <span class="login100-form-title">
+						صفحه ورود
+					</span>
+          <div class="wrap-input100">
+            <input id="username" name="username" class="input100"
+            required minlength="11" maxlength="11" pattern="^0[0-9]*$" appForbiddenName="bob"
+            [(ngModel)]="data.username" #name="ngModel"  placeholder="شماره تماس"/>
+            <span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-phone" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div class="wrap-input100">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                class="text text-danger">
+              <div *ngIf="name.errors.required">
+                شماره تماس خود را وارد نمایید.
+              </div>
+              <div *ngIf="name.errors.minlength">
+                شماره تماس خود را تصیح نمایید
+              </div>
+              <div *ngIf="name.errors.maxlength">
+                شماره تماس خود را تصیح نمایید
+              </div>
+              <div *ngIf="name.errors.pattern">
+                شماره تماس خود را تصیح نمایید
+              </div>
+            </div>
+          </div>
+          <div class="wrap-input100">
+            <input id="password" name="password" class="input100" type="password"
+            required minlength="7"
+            [(ngModel)]="data.password" #Password="ngModel" placeholder="رمز عبور"/>
+            <span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+          </div>
+          <div class="form-group">
+            <div *ngIf="Password.invalid && (Password.dirty || Password.touched)"
+                class="text text-danger">
+              <div *ngIf="Password.errors.required">
+                رمز عبور خود را وارد نمایید
+              </div>
+              <div *ngIf="Password.errors.minlength">
+                رمز عبور حداقل 7 کاراکتر میباشد
+              </div>
+
+            </div>
+          </div>
+          <div class="container-login100-form-btn">
+            <button class="login100-form-btn btn-primary" [disabled]="f.form.pristine || f.form.invalid">ورود</button>
+          </div>
+          <div class="text-center pt-2">
+						<span class="txt1">
+							فراموشی
+						</span>
+						<a class="txt2" href="{{appConfig.ForgetPasswordURL}}">
+							نام کاربری / رمز عبور ؟
+						</a>
+					</div>
+
+					<div class="text-center pt-1">
+						<a class="txt2" href="{{appConfig.RegisterURL}}">
+							ایجاد حساب کاربری
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+        </form>
+
+			</div>
+		</div>
+  </div>
+</body>

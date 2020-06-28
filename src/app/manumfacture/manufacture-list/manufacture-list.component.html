@@ -1,0 +1,184 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > در حال بارگزاری... </p></ngx-spinner>
+
+<div class="card shadow">
+  <div class="card-header">
+    <h2 class="mb-0">مدیریت لیست کارگاه ها</h2>
+  </div>
+  <div class="card-body">
+    <p-table #dt [columns]="cols" [value]="ManufactureeList" [rowHover]="true" selectionMode="single" [(selection)]="selectedManufacturee"
+      (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="ui-table-globalfilter-container col-md-4">
+            <input class="form-control " pInputText type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="جستجو" />
+          </div>
+          <div class="col-md-8" style="text-align:left">
+            <button class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              type="button" pButton icon="pi pi-plus" label="اقدامات"></button>
+            <div class="dropdown-menu" x-placement="bottom-start"
+              style="position: absolute; transform: translate3d(-65px, 27px, 0px); top: 0px; left: 0px; will-change: transform;">
+              <a class="dropdown-item" (click)="showDialogToAdd()"><i class="fas fa-plus mr-2"></i>افزودن کارگاه جدید
+                جدید</a>
+
+
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr [pSelectableRow]="rowData">
+          <td>{{rowData.dsK_ID}}</td>
+          <td>{{rowData.dsK_NAME}}</td>
+          <td>{{rowData.dsK_FARM}}</td>
+          <td>{{rowData.moN_PYM}}</td>
+          <td>{{rowData.dsK_RATE}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>
+
+<p-dialog header="{{newmanufacturee?'افزودن کارگاه جدید':'ویرایش کارگاه'}}" [(visible)]="displayDialog" [focusOnShow]="false"
+  [responsive]="true" showEffect="fade" [modal]="true" styleClass="mydialog" [style]="{width: '30vw'}">
+
+
+  <form name="form" #f="ngForm" novalidate>
+
+    <div class="modal-body">
+      <div class="p-grid ui-fluid" *ngIf="selectedManufacturee">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-12">
+              <label for="year" class="form-label">کارگاه</label>
+            </div>
+            <div class="col-md-12">
+              <input pInputText [pKeyFilter]="blockSpecial" type="text" required maxlength="150" id="dsK_NAME"
+                name="dsK_NAME" class="" #dsK_NAME="ngModel" [(ngModel)]="selectedManufacturee.dsK_NAME"
+                [ngClass]="dsK_NAME.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsK_NAME.invalid && (dsK_NAME.dirty || dsK_NAME.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsK_NAME.errors?.pattern">نام کارگاه را اصلاح نمایید</div>
+              <div *ngIf="dsK_NAME.errors?.minlength">نام کارگاه باید حداقل 8 رقم باشد</div>
+              <div *ngIf="dsK_NAME.errors?.maxlength">نام کارگاه باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsK_NAME.errors?.required">نام کارگاه را وارد نمایید</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="col-md-12">
+              <label for="year" class="form-label">کد کارگاه</label>
+            </div>
+            <div class="col-md-12">
+              <input pInputText type="text" required maxlength="150" id="dsK_ID"
+                name="dsK_ID" class="" #dsK_ID="ngModel" [(ngModel)]="selectedManufacturee.dsK_ID"
+                [ngClass]="dsK_ID.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsK_ID.invalid && (dsK_ID.dirty || dsK_ID.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsK_ID.errors?.pattern">کد کارگاه را اصلاح نمایید</div>
+              <div *ngIf="dsK_ID.errors?.minlength">کد کارگاه باید حداقل 8 رقم باشد</div>
+              <div *ngIf="dsK_ID.errors?.maxlength">کد کارگاه باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsK_ID.errors?.required">کد کارگاه را وارد نمایید</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="col-md-12">
+              <label for="year" class="form-label">ردیف پیمان</label>
+            </div>
+            <div class="col-md-12">
+              <input pInputText type="number" required maxlength="150" id="moN_PYM"
+                name="moN_PYM" class="" #moN_PYM="ngModel" [(ngModel)]="selectedManufacturee.moN_PYM"
+                [ngClass]="moN_PYM.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="moN_PYM.invalid && (moN_PYM.dirty || moN_PYM.touched)" class="col-md-12 text-danger">
+              <div *ngIf="moN_PYM.errors?.pattern">ردیف پیمان کارگاه را اصلاح نمایید</div>
+              <div *ngIf="moN_PYM.errors?.minlength">ردیف پیمان کارگاه باید حداقل 8 رقم باشد</div>
+              <div *ngIf="moN_PYM.errors?.maxlength">ردیف پیمان کارگاه باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="moN_PYM.errors?.required">ردیف پیمان کارگاه را وارد نمایید</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-12">
+              <label for="color" class="form-label">نام کارفرما</label>
+            </div>
+            <div class="col-md-12">
+              <input  pInputText [pKeyFilter]="blockSpecial" type="text" required minlength="1" maxlength="10" id="dsK_FARM" name="dsK_FARM"
+                #dsK_FARM="ngModel" class="form-control" [(ngModel)]="selectedManufacturee.dsK_FARM"
+                [ngClass]="dsK_FARM.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsK_FARM.invalid && (dsK_FARM.dirty || dsK_FARM.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsK_FARM.errors?.pattern">نام کارفرما را اصلاح نمایید</div>
+              <div *ngIf="dsK_FARM.errors?.minlength">نام کارفرما باید حداقل 1 رقم باشد</div>
+              <div *ngIf="dsK_FARM.errors?.maxlength">نام کارفرما باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsK_FARM.errors?.required">نام کارفرما را وارد نمایید</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-12">
+              <label for="color" class="form-label">نرخ بیمه</label>
+            </div>
+            <div class="col-md-12">
+              <input type="number" required minlength="1" maxlength="10" id="dsK_RATE" name="dsK_RATE"
+                #dsK_RATE="ngModel" class="form-control" [(ngModel)]="selectedManufacturee.dsK_RATE"
+                [ngClass]="dsK_RATE.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsK_RATE.invalid && (dsK_RATE.dirty || dsK_RATE.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsK_RATE.errors?.pattern">نرخ بیمه را اصلاح نمایید</div>
+              <div *ngIf="dsK_RATE.errors?.minlength">نرخ بیمه باید حداقل 1 رقم باشد</div>
+              <div *ngIf="dsK_RATE.errors?.maxlength">نرخ بیمه باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsK_RATE.errors?.required">نرخ بیمه را وارد نمایید</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-12">
+              <label for="color" class="form-label">آدرس کارگاه</label>
+            </div>
+            <div class="col-md-12">
+              <textarea rows="5"  pInputText [pKeyFilter]="blockSpecial" type="text" required minlength="1" maxlength="10" id="dsK_ADRS" name="dsK_ADRS"
+                #dsK_ADRS="ngModel" class="form-control" [(ngModel)]="selectedManufacturee.dsK_ADRS"
+                [ngClass]="dsK_ADRS.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'"></textarea>
+            </div>
+            <div *ngIf="dsK_ADRS.invalid && (dsK_ADRS.dirty || dsK_ADRS.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsK_ADRS.errors?.pattern">آدرس کارگاه را اصلاح نمایید</div>
+              <div *ngIf="dsK_ADRS.errors?.minlength">آدرس کارگاه باید حداقل 1 رقم باشد</div>
+              <div *ngIf="dsK_ADRS.errors?.maxlength">آدرس کارگاه باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsK_ADRS.errors?.required">آدرس کارگاه را وارد نمایید</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button *ngIf="!newmanufacturee" type="button" pButton icon="pi pi-times"
+        (click)="delete()" label="حذف"></button>
+      <button type="button" [disabled]="f.form.pristine || f.form.invalid" class="btn btn-primary"
+        (click)="save()">ذخیره</button>
+    </div>
+  </form>
+</p-dialog>

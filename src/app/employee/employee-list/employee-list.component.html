@@ -1,0 +1,656 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > در حال بارگزاری... </p></ngx-spinner>
+
+<div class="card shadow">
+  <div class="card-header">
+    <h2 class="mb-0">مدیریت لیست کارمندان</h2>
+  </div>
+  <div class="card-body">
+    <p-table #dt [columns]="cols" [value]="cars" [rowHover]="true" selectionMode="single" [(selection)]="selectedCar"
+      (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="ui-table-globalfilter-container col-md-4">
+            <input class="form-control " pInputText type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="جستجو" />
+          </div>
+          <div class="col-md-8" style="text-align:left">
+            <button class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              type="button" pButton icon="pi pi-plus" label="اقدامات"></button>
+            <div class="dropdown-menu" x-placement="bottom-start"
+              style="position: absolute; transform: translate3d(-65px, 27px, 0px); top: 0px; left: 0px; will-change: transform;">
+              <a class="dropdown-item" (click)="showDialogToAdd()"><i class="fas fa-plus mr-2"></i>افزودن کارمند
+                جدید</a>
+              <a class="dropdown-item" (click)="addexcel()"><i class="fas fa-file-excel mr-2"></i>افزودن از فایل اکسل</a>
+              <a class="dropdown-item" (click)="adddbf()"><i class="fas fa-file mr-2"></i>افزودن از فایل بیمه
+                </a>
+
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr [pSelectableRow]="rowData">
+          <td>{{rowData.dsW_ID1}}</td>
+          <td>{{rowData.dsW_FNAME}}</td>
+          <td>{{rowData.dsW_LNAME}}</td>
+          <td>{{rowData.dsW_IDNO}}</td>
+          <td>{{rowData.peR_NATCOD}}</td>
+          <td>{{rowData.jobs.dsW_OCP}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>
+
+<p-dialog header="{{newCar?'افزودن کارمندجدید':'ویرایش کامند'}}" [(visible)]="displayDialog" [focusOnShow]="false"
+  [responsive]="true" showEffect="fade" [modal]="true" styleClass="mydialog">
+
+
+  <form name="form" #f="ngForm" novalidate>
+
+    <div class="modal-body">
+      <div class="p-grid ui-fluid" *ngIf="car">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="year" class="form-label">نام</label>
+            </div>
+            <div class="col-md-12">
+              <input pInputText [pKeyFilter]="blockSpecial" type="text" required maxlength="150" id="dsW_FNAME"
+                name="dsW_FNAME" class="" #dsW_FNAME="ngModel" [(ngModel)]="car.dsW_FNAME"
+                [ngClass]="dsW_FNAME.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsW_FNAME.invalid && (dsW_FNAME.dirty || dsW_FNAME.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsW_FNAME.errors?.pattern">نام را اصلاح نمایید</div>
+              <div *ngIf="dsW_FNAME.errors?.minlength">نام باید حداقل 8 رقم باشد</div>
+              <div *ngIf="dsW_FNAME.errors?.maxlength">نام باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsW_FNAME.errors?.required">نام را وارد نمایید</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="brand" class="form-label">نام خانوادگی</label>
+            </div>
+            <div class="col-md-12">
+              <input pInputText [pKeyFilter]="blockSpecial" type="text" required maxlength="150" id="dsW_LNAME"
+                name="dsW_LNAME" class="form-control" #dsW_LNAME="ngModel" [(ngModel)]="car.dsW_LNAME"
+                [ngClass]="dsW_LNAME.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsW_LNAME.invalid && (dsW_LNAME.dirty || dsW_LNAME.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsW_LNAME.errors?.pattern">نام خانوادگی را اصلاح نمایید</div>
+              <div *ngIf="dsW_LNAME.errors?.minlength">نام خانوادگی باید حداقل 8 رقم باشد</div>
+              <div *ngIf="dsW_LNAME.errors?.maxlength">نام خانوادگی باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsW_LNAME.errors?.required">نام خانوادگی را وارد نمایید</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="brand" class="form-label">نام پدر</label>
+            </div>
+            <div class="col-md-12">
+              <input pInputText [pKeyFilter]="blockSpecial" type="text" required maxlength="150" id="dsW_DNAME"
+                name="dsW_DNAME" class="form-control" #dsW_DNAME="ngModel" [(ngModel)]="car.dsW_DNAME"
+                [ngClass]="dsW_DNAME.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsW_DNAME.invalid && (dsW_LNAME.dirty || dsW_LNAME.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsW_DNAME.errors?.pattern">نام پدر را اصلاح نمایید</div>
+              <div *ngIf="dsW_DNAME.errors?.minlength">نام پدر باید حداقل 8 رقم باشد</div>
+              <div *ngIf="dsW_DNAME.errors?.maxlength">نام پدر باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsW_DNAME.errors?.required">نام پدر را وارد نمایید</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="color" class="form-label">شماره شناسنامه</label>
+            </div>
+            <div class="col-md-12">
+              <input type="text" required minlength="1" maxlength="10" pattern="[0-9]*" id="dsW_IDNO" name="dsW_IDNO"
+                #dsW_IDNO="ngModel" class="form-control" [(ngModel)]="car.dsW_IDNO"
+                [ngClass]="dsW_IDNO.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsW_IDNO.invalid && (dsW_IDNO.dirty || dsW_IDNO.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsW_IDNO.errors?.pattern">شماره شناسنامه را اصلاح نمایید</div>
+              <div *ngIf="dsW_IDNO.errors?.minlength">شماره شناسنامه باید حداقل 1 رقم باشد</div>
+              <div *ngIf="dsW_IDNO.errors?.maxlength">شماره شناسنامه باید حداکثر 150 رقم باشد</div>
+              <div *ngIf="dsW_IDNO.errors?.required">شماره شناسنامه را وارد نمایید</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="color" class="form-label">شماره ملی</label>
+            </div>
+            <div class="col-md-12">
+              <input type="text" required minlength="10" maxlength="10" pattern="[0-9]*" id="peR_NATCOD"
+                name="peR_NATCOD" #peR_NATCOD="ngModel" class="form-control" [(ngModel)]="car.peR_NATCOD"
+                [ngClass]="peR_NATCOD.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="peR_NATCOD.invalid && (peR_NATCOD.dirty || peR_NATCOD.touched)" class="col-md-12 text-danger">
+              <div *ngIf="peR_NATCOD.errors?.pattern">شماره ملی را اصلاح نمایید</div>
+              <div *ngIf="peR_NATCOD.errors?.minlength">شماره ملی باید حداقل 10 رقم باشد</div>
+              <div *ngIf="peR_NATCOD.errors?.maxlength">شماره ملی را اصلاح نمایید</div>
+              <div *ngIf="peR_NATCOD.errors?.required">شماره ملی را وارد نمایید</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="color" class="form-label">جنسیت</label>
+            </div>
+            <div class="col-md-12">
+              <div class="p-grid" style="width:250px;margin-bottom:10px">
+                <div class="p-col-12">
+                  <p-radioButton name="group2" value="مرد" label="مرد" [(ngModel)]="car.dsW_SEX" inputId="preopt1">
+                  </p-radioButton>
+                  <p-radioButton name="group2" value="زن" label="زن" [(ngModel)]="car.dsW_SEX" inputId="preopt2">
+                  </p-radioButton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="color" class="form-label">تاریخ تولد</label>
+            </div>
+            <div class="col-md-12">
+              <input type="text" name="dsW_BDATE" required id="dsW_BDATE" #dsW_BDATE="ngModel" style="direction: ltr;"
+                class="form-control" [showMaskTyped]="true" [clearIfNotMatch]="true" matInput mask="0000/M0/d0"
+                [(ngModel)]="car.dsW_BDATE" [dropSpecialCharacters]="false" [validation]="true"
+                [ngClass]="dsW_BDATE.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+
+            </div>
+
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="color" class="form-label">محل تولد</label>
+            </div>
+            <div class="col-md-12">
+              <p-dropdown (onChange)="placebouten($event)" required
+                [style]="{'width':'100%','height':'100%','border':'none'}" id="place" name="place" #place="ngModel"
+                [options]="places" [(ngModel)]="car.dsW_IDPLC" filter="true"
+                [ngClass]="place.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+                <ng-template let-item pTemplate="selectedItem" style="width: 100%;height: 100%;border: none;">
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.title}}</span>-
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                  <div class="ui-helper-clearfix">
+                    <span style="vertical-align:middle; margin-left: .5em">{{car.title}}</span>-
+                    <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+            <div *ngIf="place.invalid && (place.dirty || place.touched)" class="col-md-12 text-danger">
+              <div *ngIf="place.errors?.pattern">محل تولد را اصلاح نمایید</div>
+              <div *ngIf="place.errors?.minlength">محل تولد باید حداقل 20 رقم باشد</div>
+              <div *ngIf="place.errors?.maxlength">محل تولد را اصلاح نمایید</div>
+              <div *ngIf="place.errors?.required">محل تولد را وارد نمایید</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <label for="color" class="form-label">ملیت</label>
+            </div>
+            <div class="col-md-12">
+              <p-dropdown (onChange)="countrybouten($event)" required
+                [style]="{'width':'100%','height':'100%','border':'none'}" #country="ngModel" id="country"
+                name="country" [options]="nat" [(ngModel)]="car.dsW_NAT" filter="true"
+                [ngClass]="country.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+                <ng-template let-item pTemplate="selectedItem" style="width: 300px">
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
+                  <div class="ui-helper-clearfix">
+                    <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+            <div *ngIf="country.invalid && (country.dirty || country.touched)" class="col-md-12 text-danger">
+              <div *ngIf="country.errors?.pattern">ملیت را اصلاح نمایید</div>
+              <div *ngIf="country.errors?.minlength">ملیت باید حداقل 20 رقم باشد</div>
+              <div *ngIf="country.errors?.maxlength">ملیت را اصلاح نمایید</div>
+              <div *ngIf="country.errors?.required">ملیت را وارد نمایید</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class=" col-md-6">
+            <div class="col-md-12">
+              <label for="vin" class="form-label">شماره بیمه</label>
+            </div>
+            <div class="col-md-12">
+              <input type="text" required minlength="8" maxlength="11" pattern="[0-9]*" #dsW_ID1="ngModel"
+                class="form-control" id="dsW_ID1" name="dsW_ID1" [(ngModel)]="car.dsW_ID1" autofocus
+                [ngClass]="dsW_ID1.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+            </div>
+            <div *ngIf="dsW_ID1.invalid && (dsW_ID1.dirty || dsW_ID1.touched)" class="col-md-12 text-danger">
+              <div *ngIf="dsW_ID1.errors?.pattern">شماره بیمه را اصلاح نمایید</div>
+              <div *ngIf="dsW_ID1.errors?.required">شماره بیمه را وارد نمایید</div>
+              <div *ngIf="dsW_ID1.errors?.minlength">شماره بیمه باید حداقل 8 رقم باشد</div>
+              <div *ngIf="dsW_ID1.errors?.maxlength">شماره بیمه باید حداکثر 10 رقم باشد</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="col-md-12">
+              <label for="color" class="form-label">کد شغل</label>
+            </div>
+            <div class="col-md-12">
+              <p-autoComplete [style]="{'border':'none'}" required id="jobs" name="jobs" #jobs="ngModel"
+                [(ngModel)]="car.jobs" [suggestions]="results" (onSelect)="selectedjob($event)"
+                (completeMethod)="search($event)" field="code" placeholder="جستجو در مشاغل بیمه" [minLength]="3"
+                [ngClass]="jobs.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+                <ng-template let-text pTemplate="item" style="width: 300px;border:none">
+                  <div class="">
+                    <div style="font-size:12px;float:right;margin:5px 5px 0 0">{{text.dsW_JOB}}</div>
+                    <div style="font-size:12px;float:right;margin:5px 5px 0 0">{{text.dsW_OCP}}</div>
+                  </div>
+                </ng-template>
+              </p-autoComplete>
+              <span>شغل : {{car.jobs ? car.jobs.dsW_OCP||text : 'none'}}</span>
+            </div>
+            <div *ngIf="jobs.invalid && (jobs.dirty || jobs.touched)" class="col-md-12 text-danger">
+              <div *ngIf="jobs.errors?.pattern">کد شغل را اصلاح نمایید</div>
+              <div *ngIf="jobs.errors?.minlength">کد شغل باید حداقل 1 رقم باشد</div>
+              <div *ngIf="jobs.errors?.maxlength">کد شغل باید حداکثر 10 رقم باشد</div>
+              <div *ngIf="jobs.errors?.required">کد شغل را وارد نمایید</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label>انتخاب دسته بندی</label>
+          <p-dropdown [style]="{'width':'100%','height':'100%','border':'none'}" #listEmployeeID="ngModel"
+            id="listEmployeeID" name="listEmployeeID" [options]="categurys" [(ngModel)]="car.listEmployeeID"
+            filter="true"
+            [ngClass]="listEmployeeID.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+            <ng-template let-item pTemplate="selectedItem" style="width: 300px">
+              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
+              <div class="ui-helper-clearfix">
+                <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button *ngIf="!newCar" type="button" pButton icon="pi pi-times"
+        (click)="delete()" label="حذف"></button>
+      <button type="button" [disabled]="f.form.pristine || f.form.invalid" class="btn btn-primary"
+        (click)="save()">ذخیره</button>
+    </div>
+  </form>
+</p-dialog>
+<p-dialog header="افزودن از فایل اکسل" [(visible)]="displayDialogExcel" [focusOnShow]="false" [responsive]="true"
+  showEffect="fade" [modal]="true" styleClass="mydialog" [style]="{width:!ExcelEmployee? '50vw':'80vw'}">
+  <!-- <p-progressSpinner> -->
+  <ng-wizard *ngIf="!ExcelEmployee" [config]="config" (stepChanged)="stepChanged($event)">
+
+    <ng-wizard-step [title]="'فایل نمونه'" [description]="'دانلود فایل نمونه'">
+      <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
+        aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
+        <h2>درباره من</h2>
+        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
+          ایپسوم
+          متن ساختگی با تولید سادگی نامفهوم.</p>
+
+        <div class="media-heading mt-3">
+          <h3><strong>بیوگرافی</strong></h3>
+        </div>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
+          ساختگی با تولید سادگی نامفهوم</p>
+        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم
+          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
+          با
+          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+      </div>
+    </ng-wizard-step>
+    <ng-wizard-step [title]="' راهنما ارسال'" [description]="'راهنمای ارسال با اکسل'">
+      <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
+        aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
+        <h2>درباره من</h2>
+        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
+          ایپسوم
+          متن ساختگی با تولید سادگی نامفهوم.</p>
+
+        <div class="media-heading mt-3">
+          <h3><strong>بیوگرافی</strong></h3>
+        </div>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
+          ساختگی با تولید سادگی نامفهوم</p>
+        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم
+          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
+          با
+          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+      </div>
+    </ng-wizard-step>
+    <ng-wizard-step [title]="'ارسال فایل'" [description]="'ارسال فایل اکسل'">
+      <div class="form-group">
+        <label>انتخاب دسته بندی</label>
+        <p-dropdown [style]="{'width':'100%','height':'100%','border':'none'}" #listEmployeeID="ngModel"
+          id="listEmployeeID" name="listEmployeeID" [options]="categurys" [(ngModel)]="categuryexcel" filter="true"
+          [ngClass]="listEmployeeID.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+          <ng-template let-item pTemplate="selectedItem" style="width: 300px">
+            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+          </ng-template>
+          <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
+            <div class="ui-helper-clearfix">
+              <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+      </div>
+      <div style="direction: rtl;text-align: right;" class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">افزودن دسته ای کارمندان با فایل</span>
+          </div>
+          <div class="custom-file">
+
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+              accept=".xlsx,.xls" (change)="onFileSelected($event)">
+            <label class="custom-file-label"
+              for="inputGroupFile01">{{this.fileexel!=null?this.fileexel.files[0].name:'انتخاب فایل'}}</label>
+
+
+
+          </div>
+        </div>
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn btn-primary" (click)="onUpload()">ارسال</button>
+        </div>
+      </div>
+    </ng-wizard-step>
+
+  </ng-wizard>
+  <div *ngIf="ExcelEmployee">
+    <h3 class="first">مرور اطلاعات</h3>
+    <p-table [value]="ExcelEmployee" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})" dataKey="id" editMode="row" [responsive]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:4em">ردیف</th>
+          <th>نام</th>
+          <th>نام خانوادگی</th>
+          <th>نام پدر</th>
+          <th>شماره ملی</th>
+          <th>شماره شناسنامه</th>
+          <th>شماره بیمه</th>
+          <th>محل صدور</th>
+          <th>تاریخ تولد</th>
+          <th>جنسیت</th>
+          <th>ملیت</th>
+          <th>کد شغل</th>
+          <th style="width:8em"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="rowData">
+          <td style="text-align: center;">{{rowData.id}}</td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_FNAME" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_FNAME}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_LNAME" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_LNAME}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_DNAME" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_DNAME}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.pER_NATCOD" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.pER_NATCOD}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_IDNO" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_IDNO}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_ID1" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_ID1}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+         <td style="text-align: center;">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="rowData.dSW_IDPLC" required>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{rowData.dSW_IDPLC}}
+            </ng-template>
+          </p-cellEditor>
+         </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [showMaskTyped]="true" [dropSpecialCharacters]="false" [clearIfNotMatch]="true" matInput mask="0000/M0/d0" [(ngModel)]="rowData.dSW_BDATE" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_BDATE}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_SEX" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_SEX}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_NAT" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_NAT}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_OCP" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_OCP}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+
+
+          <td style="text-align:center">
+            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info"
+              (click)="onRowEditInit(rowData)"></button>
+              <button *ngIf="!editing" pButton type="button"  icon="pi pi-times" class="ui-button-danger"
+              (click)="onRowEditdelet(rowData)"></button>
+            <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success"
+              style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+            <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger"
+              (click)="onRowEditCancel(rowData, ri)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="button" pButton icon="pi pi-forward" label="انصراف" (click)="clearExcelEmployee()"></button>
+        </div>
+          <div class="col-md-6">
+              <button type="button" pButton icon="pi pi-check" label="ذخیره" class="ui-button-success" (click)="saveexcellist()"></button>
+          </div>
+        </div>
+
+
+    </ng-template>
+    </p-table>
+  </div>
+
+  <!-- </p-progressSpinner> -->
+
+
+
+</p-dialog>
+<p-dialog header="افزودن از فایل DBF" [(visible)]="displayDialogFBF" [focusOnShow]="false" [responsive]="true"
+  showEffect="fade" [modal]="true" styleClass="mydialog" [style]="{width:!ExcelEmployee? '50vw':'80vw'}">
+  <ng-wizard [config]="config" >
+
+    <ng-wizard-step [title]="'راهنمای فایل'" [description]="'دانلود فایل نمونه'">
+      <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
+        aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
+        <h2>درباره من</h2>
+        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
+          ایپسوم
+          متن ساختگی با تولید سادگی نامفهوم.</p>
+
+        <div class="media-heading mt-3">
+          <h3><strong>بیوگرافی</strong></h3>
+        </div>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
+          ساختگی با تولید سادگی نامفهوم</p>
+        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم
+          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
+          با
+          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+      </div>
+    </ng-wizard-step>
+    <ng-wizard-step [title]="' راهنما ارسال'" [description]="'راهنمای ارسال با فایل DBF'">
+      <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
+        aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
+        <h2>درباره من</h2>
+        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
+          ایپسوم
+          متن ساختگی با تولید سادگی نامفهوم.</p>
+
+        <div class="media-heading mt-3">
+          <h3><strong>بیوگرافی</strong></h3>
+        </div>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
+          ساختگی با تولید سادگی نامفهوم</p>
+        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم
+          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
+          با
+          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
+          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+      </div>
+    </ng-wizard-step>
+    <ng-wizard-step [title]="'ارسال فایل'" [description]="'ارسال فایل DBF'">
+      <div class="form-group">
+        <label>انتخاب دسته بندی</label>
+        <p-dropdown [style]="{'width':'100%','height':'100%','border':'none'}" #listEmployeeID="ngModel"
+          id="listEmployeeID" name="listEmployeeID" [options]="categurys" [(ngModel)]="categuryexcel" filter="true"
+          [ngClass]="listEmployeeID.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+          <ng-template let-item pTemplate="selectedItem" style="width: 300px">
+            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+          </ng-template>
+          <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
+            <div class="ui-helper-clearfix">
+              <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+      </div>
+      <div style="direction: rtl;text-align: right;" class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">DBF(فایل بیمه)افزودن دسته ای کارمندان با فایل</span>
+          </div>
+          <div class="custom-file">
+
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+              accept=".dbf" (change)="onFileSelectedDBF($event)">
+            <label class="custom-file-label"
+              for="inputGroupFile01">{{this.SelectedFiledbf!=null?this.SelectedFiledbf.name:'انتخاب فایل'}}</label>
+
+
+
+          </div>
+        </div>
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn btn-primary" (click)="onUploaddbf()">ارسال</button>
+        </div>
+      </div>
+    </ng-wizard-step>
+
+  </ng-wizard>
+
+
+
+
+
+</p-dialog>

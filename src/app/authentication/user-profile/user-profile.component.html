@@ -1,0 +1,163 @@
+<div class="card shadow overflow-hidden">
+  <!-- Row -->
+  <div class="row">
+    <div class="col-lg-5 col-m-5 col-xs-12">
+      <div class="card shadow">
+
+        <div class="card-body">
+          <!-- dddd -->
+          <!-- PAGE STUFF -->
+
+
+          <div class="rela-block container" style="background-color: inherit;">
+            <div class="rela-block profile-card"
+              style="background-image: url(https://www.creative-asset.co.uk/wp-content/uploads/2017/10/cabackground-blue.jpg);">
+              <div *ngIf="userdio.data.userImage" class="profile-pic" id="profile_pic"
+                style="background-image: url({{appConfig.apiEndpoint+userdio.data.userImage}});"></div>
+              <i *ngIf="!userdio.data.userImage" class="fa fa-user fa-5x profile-pic" id="profile_pic"
+                style="padding: 0.17em 0.28em;background-color: darkgrey;font-size: 109px;"></i>
+              <div class="rela-block profile-name-container">
+                <div class="rela-block user-name" id="user_name">{{userdio.data.fullName}}</div>
+                <div class="rela-block user-desc" id="user_description" style="color: aliceblue;">شماره تماس
+                  :{{userdio.data.userPhone}}</div>
+              </div>
+              <div class="rela-block profile-card-stats">
+                <div class="floated profile-stat works" id="num_works">{{userdio.data.manufacturyCount}}<br></div>
+                <div class="floated profile-stat followers" id="num_followers">{{userdio.data.emplyeCount}}<br></div>
+                <div class="floated profile-stat following" id="num_following">{{userdio.data.userWallet  | irc }}<br>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- dddd -->
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7 col-m-7 col-xs-12">
+      <div class="card shadow">
+        <div class="card-header">
+          <h2 class="mb-0">ویرایش اطلاعات کاربری</h2>
+        </div>
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="myTab2" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active show" id="home-tab2" data-toggle="tab" href="#home2" role="tab"
+                aria-selected="true">تغییر رمز عبور</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab"
+                aria-selected="false">ویرایش تصویر</a>
+            </li>
+
+          </ul>
+          <div class="tab-content tab-bordered" id="myTab2Content">
+            <div class="tab-pane fade text-sm active show" id="home2" role="tabpanel" aria-labelledby="home-tab2">
+              <form name="form" (ngSubmit)="f.form.valid && ChangePassword()" #f="ngForm" novalidate class="">
+
+                <div class="wrap-input100">
+                  <input id="curentpassword" name="curentpassword" type="password" class="input100" required
+                    minlength="7" appForbiddenName="1234567" [(ngModel)]="data.curentpassword" #name="ngModel"
+                    placeholder="رمز عبور فعلی" />
+                  <span class="focus-input100"></span>
+                  <span class="symbol-input100">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <div class="wrap-input100">
+                  <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text text-danger">
+                    <div *ngIf="name.errors.required">
+                      لطفاً رمز عبور فعلی خود را وارد نمایید
+                    </div>
+                    <div *ngIf="name.errors.minlength">
+                      رمز عبور شما باید حداقل 7 کاراکتر باشد
+                    </div>
+                    <div *ngIf="name.errors.maxlength">
+                      شماره تماس خود را تصیح نمایید
+                    </div>
+                    <div *ngIf="name.errors.pattern">
+                      شماره تماس خود را تصیح نمایید
+                    </div>
+                  </div>
+                </div>
+                <div class="wrap-input100">
+                  <input id="newpassword" name="newpassword" class="input100" type="password" required minlength="7"
+                    [(ngModel)]="data.newpassword" #Password="ngModel" placeholder="رمز عبور جدید" />
+                  <span class="focus-input100"></span>
+                  <span class="symbol-input100">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <div class="wrap-input100">
+                  <div *ngIf="Password.invalid && (Password.dirty || Password.touched)" class="text text-danger">
+                    <div *ngIf="Password.errors.required">
+                      رمز عبور خود را وارد نمایید
+                    </div>
+                    <div *ngIf="Password.errors.minlength">
+                      رمز عبور حداقل 7 کاراکتر میباشد
+                    </div>
+
+                  </div>
+                </div>
+                <div class="wrap-input100">
+                  <input id="repassword" name="repassword" class="input100" type="password" required minlength="7"
+                    [(ngModel)]="data.repassword" #repassword="ngModel" placeholder="تکرار رمز عبور جدید"
+                    data-match="#password" data-match-error="Whoops, these don't match" />
+                  <span class="focus-input100"></span>
+                  <span class="symbol-input100">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <div class="wrap-input100">
+                  <div *ngIf="repassword.invalid && (repassword.dirty || repassword.touched)" class="text text-danger">
+                    <div *ngIf="repassword.errors.required">
+                      تکرار رمز عبور خود را وارد نمایید
+                    </div>
+                    <div *ngIf="repassword.errors.minlength">
+                      رمز عبور حداقل 7 کاراکتر میباشد
+                    </div>
+                    <div *ngIf="repassword.errors.match">
+                    </div>
+                  </div>
+                </div>
+                <div class="container-login100-form-btn">
+                  <button class="login100-form-btn btn-primary" [disabled]="f.form.pristine || f.form.invalid">تغییر رمز
+                    عبور</button>
+                </div>
+
+
+              </form>
+            </div>
+            <div class="tab-pane fade text-sm" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
+              <form>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">تغییر پروفایل کاربری</span>
+                  </div>
+                  <div class="custom-file">
+
+                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                      aria-describedby="inputGroupFileAddon01" accept=".jpg,.gif,.png" (change)="onFileSelected($event)">
+                    <label class="custom-file-label" for="inputGroupFile01">انتخاب عکس</label>
+
+
+
+                  </div>
+                </div>
+                <div class="container-login100-form-btn">
+                  <button class="login100-form-btn btn-primary" (click)="onUpload()">تغییر تصویر پروفایل</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- /Row -->
+</div>

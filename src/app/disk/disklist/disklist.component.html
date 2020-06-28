@@ -1,0 +1,113 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> در حال بارگزاری... </p>
+</ngx-spinner>
+
+<div class="card shadow">
+  <div class="card-header">
+    <h2 class="mb-0">لیست های بیمه</h2>
+  </div>
+  <div class="card-body">
+    <p-table #dt [columns]="cols" [value]="DiskList" [rowHover]="true" selectionMode="single"
+      [(selection)]="selectedDisk" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10"
+      [showCurrentPageReport]="true" currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="ui-table-globalfilter-container col-md-4">
+            <input class="form-control " pInputText type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="جستجو" />
+          </div>
+          <div class="col-md-8" style="text-align:left">
+            <button class="btn btn-primary btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              type="button" pButton icon="pi pi-plus" label="اقدامات"></button>
+            <div class="dropdown-menu" x-placement="bottom-start"
+              style="position: absolute; transform: translate3d(-65px, 27px, 0px); top: 0px; left: 0px; will-change: transform;">
+              <a class="dropdown-item" (click)="showDialogToAdd()"><i class="fas fa-plus mr-2"></i>افزودن کارگاه جدید
+                جدید</a>
+
+
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr [pSelectableRow]="rowData">
+          <td>{{rowData.manufactureDto.dsK_NAME}}</td>
+          <td>{{rowData.manufactureDto.dsK_RATE}}</td>
+          <td>{{rowData.dsK_NUM}}</td>
+          <td>{{rowData.dsK_YY}}</td>
+          <td>{{rowData.dsK_MM}}</td>
+          <td>{{rowData.dsK_TTOTL | irc}}</td>
+          <td>{{rowData.dsK_TKOSO | irc}}</td>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>
+
+<p-dialog header="{{newmanuDisk?'افزودن کارگاه جدید':'ویرایش کارگاه'}}" [(visible)]="displayDialog"
+  [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true" styleClass="mydialog"
+  [style]="{width: '30vw'}">
+
+
+  <form name="form" #f="ngForm" novalidate>
+
+    <div class="modal-body">
+      <div class="p-grid ui-fluid">
+        <div class="col-md-12">
+          <div class="form-group">
+            <p-dropdown name="manufactureaddvaluid" #manufactureaddvaluidd="ngModel" id="manufactureaddvaluid" [style]="{'width':'100%','height':'100%','border':'none'}" required [options]="categurys" [(ngModel)]="manufactureaddvaluid" filter="true"
+            [ngClass]="manufactureaddvaluid ===0 ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+            <ng-template let-item pTemplate="selectedItem" style="width: 300px">
+              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
+              <div class="ui-helper-clearfix">
+                <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 row">
+            <label class="col-md-4">سال عملکرد</label>
+            <div class="col-md-8 ">
+              <input type="text" id="yy" name="yy" class="form-control"  matInput mask="0000" [showMaskTyped]="true"
+               [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [validation]="true" [(ngModel)]="yy"
+              />
+            </div>
+          </div>
+          <div class="col-md-6 row">
+            <label  class="col-md-4">ماه عملکرد</label>
+            <div class="col-md-8">
+              <input type="text" id="mm" name="mm" class="form-control"  matInput mask="M0" [showMaskTyped]="true"
+               [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [validation]="true" [(ngModel)]="mm"
+              />
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" [disabled]="f.form.pristine || f.form.invalid" class="btn btn-primary"
+        (click)="save()">ذخیره</button>
+    </div>
+  </form>
+</p-dialog>

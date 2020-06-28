@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "TaminApp": {
@@ -21,12 +21,49 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest",
+              "src/env.js"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "src/styles.css",
+              "src/assets/css/icons.css",
+              "src/assets/plugins/bootstrap/css/bootstrap.min.css",
+              "src/assets/css/bootstrap-rtl.min.css",
+              "src/assets/css/dashboard.css",
+              "src/assets/plugins/tabs/style.css",
+              "src/assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css",
+              "src/assets/plugins/customscroll/jquery.mCustomScrollbar.css",
+              "src/assets/plugins/toggle-sidebar/horizontal-menu/dropdown-effects/fade-down.css",
+              "src/assets/plugins/toggle-sidebar/horizontal-menu/webslidemenu.css",
+              "src/assets/plugins/single-page/css/main.css",
+              "src/assets/css/boxedcss.css",
+              "src/assets/css/kamadatepicker.min.css",
+              "node_modules/ng-wizard/themes/ng_wizard.min.css",
+              "node_modules/ng-wizard/themes/ng_wizard_theme_circles.min.css",
+              "node_modules/primeflex/primeflex.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/js/popper.js",
+              "src/assets/plugins/bootstrap/js/bootstrap.min.js",
+              "src/assets/plugins/chart-echarts/echarts.js",
+              "src/assets/plugins/peitychart/jquery.peity.min.js",
+              "src/assets/plugins/peitychart/peitychart.init.js",
+              "src/assets/js/custom.js",
+              "src/assets/plugins/toggle-sidebar/horizontal-menu/webslidemenu.js",
+              "src/assets/js/headerfix.js",
+              "src/assets/js/horizontal-dashboard-sales.js",
+              "src/assets/js/ali.js",
+              "src/assets/plugins/datatable/jquery.dataTables.min.js",
+              "src/assets/plugins/datatable/dataTables.bootstrap4.min.js",
+              "src/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.js",
+              "src/assets/js/wizard.js",
+              "src/assets/plugins/toggle-sidebar/js/sidemenu.js",
+            ]
           },
           "configurations": {
             "production": {
@@ -55,7 +92,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
@@ -85,7 +124,8 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.css"
@@ -119,6 +159,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "TaminApp"
+    }
+  },
+  "defaultProject": "TaminApp",
+  "cli": {
+    "analytics": "43de1518-172b-4762-99d4-bc59a95e107c"
+  }
 }

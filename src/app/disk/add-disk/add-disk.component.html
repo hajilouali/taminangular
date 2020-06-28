@@ -1,0 +1,528 @@
+<div class="card shadow overflow-hidden">
+  <div class="card-body">
+    <div class="row">
+      <h3 class="first"> ساخت دیسک</h3>
+
+      <div pDraggable="pnl" dragHandle=".ui-panel-titlebar">
+        <p-panel header="راهنما">
+          در این قست می توانید برای سخت دیست لیست کامندان دیسک را اضافه کرده که می توان یا از لیست کامدان و یا انتخاب
+          دسته ای کامندان و یا کپی از دیسک قبلی ساخته شده استفاده نمود . برای اضافه کردن کامند ابتدا نوع اضافه نمودن را
+          مشخص و سپس از لیست قابل انتخاب کارمندان به جدول لیست اضافه کرده که این کاررا می توان با گرفتن و کشید کرمندان و
+          یا با کلیک بر روی علامت + انجام نمود.
+        </p-panel>
+        <p-panel header="اطلاعات کارگاه">
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-4 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">کد کارگاه:</label>
+                  </div>
+                  <div class="col-lg-8">
+                    <input class="formcontrolcustom" pInputText id="dsK_ID" name="dsK_ID" disabled type="text"
+                      value="{{diskinfo.manufactureDto.dsK_ID}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-4 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">نام کارگاه:</label>
+                  </div>
+                  <div class="col-lg-8">
+                    <input class="formcontrolcustom" id="dsK_NAME" name="dsK_NAME" disabled type="text"
+                      value="{{diskinfo.manufactureDto.dsK_NAME}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-5 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">ردیف پیمان:</label>
+                  </div>
+                  <div class="col-lg-7">
+                    <input class="formcontrolcustom" id="moN_PYM" name="moN_PYM" disabled type="text"
+                      value="{{diskinfo.manufactureDto.moN_PYM}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-4 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">نام
+                      کارفرما:</label>
+                  </div>
+                  <div class="col-lg-8">
+                    <input class="formcontrolcustom" id="dsK_FARM" disabled name="dsK_FARM" type="text"
+                      value="{{diskinfo.manufactureDto.dsK_FARM}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">آدرس
+                      کارگاه:</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <input class="formcontrolcustom" disabled id="dsK_ADRS" name="dsK_ADRS" type="text"
+                      value="{{diskinfo.manufactureDto.dsK_ADRS}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">سال</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <input class="formcontrolcustom" disabled id="yy" name="yy" type="number"
+                      value="{{diskinfo.dsK_YY}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">ماه</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <input class="formcontrolcustom" id="mm" name="mm" disabled type="number"
+                      value="{{diskinfo.dsK_MM}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع روز های
+                      کارکرد</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <input class="formcontrolcustom" disabled id="dsK_TROOZ" name="dsK_TROOZ" type="text"
+                      value="{{diskinfo.dsK_TROOZ}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-5 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">شماره لیست</label>
+                  </div>
+                  <div class="col-lg-7">
+                    <input class="formcontrolcustom" disabled id="dsK_LISTNO" name="dsK_LISTNO" type="text"
+                      value="{{diskinfo.dsK_LISTNO}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-5 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">تعداد نفرات</label>
+                  </div>
+                  <div class="col-lg-7">
+                    <input class="formcontrolcustom" disabled id="dsK_NUM" name="dsK_NUM" type="text"
+                      value="{{diskinfo.dsK_NUM}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </p-panel>
+        <p-panel header="اطلاعات دیسک">
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع دستمزد
+                      روزانه:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" pInputText disabled id="dsK_TROOZ" name="dsK_TROOZ" type="text"
+                      value="{{diskinfo.dsK_TROOZ | irc}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع دستمزد
+                      ماهانه</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" disabled id="dsK_TMAZ" name="dsK_TMAZ" type="text"
+                      value="{{diskinfo.dsK_TMAZ | irc}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع مزایای ماهانه
+                      مشمول:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" disabled id="dsK_TMASH" name="dsK_TMASH" type="text"
+                      value="{{diskinfo.dsK_TMASH | irc}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 ">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع کل دستمزد و
+                      مزایای ماهانه:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" disabled id="dsK_TTOTL" name="dsK_TTOTL" type="text"
+                      value="{{diskinfo.dsK_TTOTL | irc}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 ">
+                    <label class="control-label form-label" for="dsK_RATE" style="font-size: 12px;">نرخ حق بیمه:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" id="dsK_RATE" name="dsK_RATE" type="text"
+                      value="{{diskinfo.manufactureDto.dsK_RATE }}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 ">
+                    <label class="control-label form-label" for="dsK_TBIME" style="font-size: 12px;">حق بیمه سهم
+                      بیمه‌شده:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" disabled id="dsK_TBIME" name="dsK_TBIME" type="text"
+                      value="{{diskinfo.dsK_TBIME | irc}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label class="control-label form-label" for="dsK_TKOSO" style="font-size: 12px;">حق بیمه سهم
+                      کارفرما:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" id="dsK_TKOSO" name="dsK_TKOSO" type="text"
+                      value="{{diskinfo.dsK_TKOSO | irc}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label class="control-label form-label" for="dsK_BIC" style="font-size: 12px;">حق بیمه
+                      بیکاری:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <!-- <p-inputnumber [(ngModel)]="diskinfo.dsK_BIC"></p-inputnumber> -->
+
+                    <input class="formcontrolcustom" id="dsK_BIC" name="dsK_BIC" type="text"
+                      [ngModel]="diskinfo.dsK_BIC | irc" (ngModelChange)="diskinfo.dsK_BIC=$event">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع دستمزد و مزایای
+                      ماهانه مشمول:</label>
+                  </div>
+                  <div class="col-lg-6">
+                    <input class="formcontrolcustom" id="userName1" name="userName" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </p-panel>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class=" p-col-nogutter drag-column">
+          <h3></h3>
+          <p-dropdown [style]="{'width':'100%','height':'100%','border':'none'}" #country="ngModel" id="country"
+            name="country" [options]="categurys" [(ngModel)]="selectedcat" filter="true"
+            [ngClass]="country.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+            <ng-template let-item pTemplate="selectedItem" style="width: 300px">
+              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
+              <div class="ui-helper-clearfix">
+                <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <p-scrollPanel [style]="{width: '100%', height: '400px'}">
+            <ul *ngIf="selectedcat===0" style="margin:0;padding:0;padding:1em;line-height:1.5">
+
+              <li *ngFor="let car of availableEmployee" class="ui-helper-clearfix" pDraggable="cars"
+                (onDragStart)="dragStart($event,car)" (onDragEnd)="dragEnd($event)">
+                <p-card>
+                  <p-header>
+                    <div class="row">
+                    </div>
+                  </p-header>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <i class="pi pi-plus" style="font-size: 35px "></i>
+                    </div>
+                    <div class="col-md-10">
+                      <p style="margin:auto">{{car.dsW_FNAME}} {{car.dsW_LNAME}}</p>
+                      <p>شماره بیمه : {{car.dsW_ID1}} </p>
+                      <p> شماره ملی : {{car.peR_NATCOD}}</p>
+                    </div>
+                  </div>
+                  <p-footer>
+                  </p-footer>
+                </p-card>
+
+              </li>
+
+            </ul>
+            <ul *ngIf="selectedcat===1" style="margin:0;padding:0;padding:1em;line-height:1.5">
+
+              <li *ngFor="let car of availableEmployeeByList" class="ui-helper-clearfix" pDraggable="cars"
+                (onDragStart)="dragListStart($event,car)" (onDragEnd)="dragListEnd($event)">
+                <p-card>
+                  <p-header>
+                    <div class="row">
+                    </div>
+                  </p-header>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <i class="pi pi-plus" style="font-size: 35px "></i>
+                    </div>
+                    <div class="col-md-10">
+                      <p style="margin:auto">{{car.Title}}</p>
+
+                    </div>
+                  </div>
+                  <p-footer>
+                  </p-footer>
+                </p-card>
+
+              </li>
+
+            </ul>
+          </p-scrollPanel>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 ">
+    <div class="card shadow">
+      <div class="card-body">
+
+        <div class="drop-column" pDroppable="cars" (onDrop)="drop($event)"
+          [ngClass]="{'ui-highlight-car':draggedEmployee}">
+          <h3>Drag and Drop to Table</h3>
+
+          <p-table [value]="selectedeEmployes">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>نام</th>
+                <th>نام خانوادگی</th>
+                <th>شماره بیمه</th>
+                <th>شماره ملی</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-car>
+              <tr>
+                <td>{{car.employeeDto.dsW_FNAME}}</td>
+                <td>{{car.employeeDto.dsW_LNAME}}</td>
+                <td>{{car.employeeDto.dsW_ID1}}</td>
+                <td>{{car.employeeDto.peR_NATCOD}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<p-dialog [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsW_ROOZ" style="font-size: 12px;">دستمزد روزانه</label>
+          </div>
+          <div class="col-lg-6">
+            <input class="formcontrolcustom" (ngModelChange)="calculatebim()" id="dsW_ROOZ" name="dsW_ROOZ" type="number"
+               [(ngModel)]="worktemp.dsW_ROOZ">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsK_TMAZ" style="font-size: 12px;">مزایای ماهانه</label>
+          </div>
+          <div class="col-lg-6">
+            <input class="formcontrolcustom" (ngModelChange)="calculatebim()" id="dsK_TMAZ" name="dsK_TMAZ" type="number"
+              [(ngModel)]="worktemp.dsW_MAZ">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsW_SDATE" style="font-size: 12px;">تاریخ شروع به کار</label>
+          </div>
+          <div class="col-lg-6">
+
+            <input class="formcontrolcustom" matInput mask="{{masket}}" [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [showMaskTyped]="true" id="dsW_SDATE" name="dsW_SDATE" type="text"
+             [(ngModel)]="worktemp.dsW_SDATE" (ngModelChange)="calculatebim()">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsW_EDATE" style="font-size: 12px;">تاریخ پایان کار</label>
+          </div>
+          <div class="col-lg-6">
+            <input class="formcontrolcustom" matInput mask="{{masket}}" [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [showMaskTyped]="true" id="dsW_EDATE" name="dsW_EDATE" type="text"
+             [(ngModel)]="worktemp.dsW_EDATE"  (ngModelChange)="calculatebim()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsW_DD" style="font-size: 12px;">تعداد روز کاری</label>
+          </div>
+          <div class="col-lg-6">
+            <input class="formcontrolcustom" id="dsW_DD" name="dsW_DD" type="number"
+            [(ngModel)]="worktemp.dsW_DD" (ngModelChange)="calculatebim()">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsW_MAH" style="font-size: 12px;">دستمزد ماهانه</label>
+          </div>
+          <div class="col-lg-6">
+            <input class="formcontrolcustom" disabled id="dsW_MAH" name="dsW_MAH" type="text"
+            value="{{worktemp.dsW_MAH | number}}"  >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsW_MASH" style="font-size: 12px;">جمع کل دستمزد و مزایای ماهانه </label>
+          </div>
+          <div class="col-lg-6">
+            <input class="formcontrolcustom" disabled id="dsW_MASH" name="dsW_MASH" type="text"
+            value="{{worktemp.dsW_MASH | number}}" >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-6 ">
+            <label class="control-label form-label" for="dsW_BIME" style="font-size: 12px;">حق بیمه سهم بیمه شده</label>
+          </div>
+          <div class="col-lg-6">
+            <input class="formcontrolcustom" disabled id="dsW_BIME" name="dsW_BIME" type="text"
+            value="{{worktemp.dsW_BIME | number}}" >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button pButton type="button" label="افزودن" (click)="addtolist()"></button>
+  </p-footer>
+</p-dialog>
