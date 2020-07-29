@@ -1,0 +1,110 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> در حال بارگزاری... </p>
+</ngx-spinner>
+<div class="card shadow overflow-hidden">
+  <div class="card-body">
+    <p-table #dt [value]="list" selectionMode="single"  [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="ui-table-globalfilter-container col-md-4">
+            <input class="form-control " pInputText type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="جستجو" />
+          </div>
+          <div class="col-md-8" style="text-align:left">
+            <a class="btn btn-icon  btn-primary mt-1 mb-1" (click)="NewTiket()"><i class="fas fa-plus mr-2"></i>درخواست
+              پشتیبانی جدید</a>
+
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 7%;">شماره تیکت</th>
+          <th style="width: 40%;">عنوان</th>
+          <th style="width: 10%;">اولویت</th>
+          <th style="width: 8%;">وضعیت </th>
+          <th style="width: 12%;">ارسال</th>
+          <th style="width: 12%;">آخرین فعالیت</th>
+          <th style="width: 8%;"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-car>
+        <tr>
+          <td>{{car.id}}</td>
+          <td>{{car.title}}</td>
+          <td *ngIf="car.level===1"><span class="badge badge-pill badge-default">عادی</span></td>
+          <td *ngIf="car.level===2"><span class="badge badge-pill badge-danger">مهم</span></td>
+          <td *ngIf="car.level===3"><span class="badge badge-pill badge-warning">خیلی مهم</span></td>
+          <td *ngIf="car.isAdminSide">
+            <span class="badge badge-success">پاسخ داده شده</span>
+          </td>
+          <td *ngIf="!car.isAdminSide">
+            <span class="badge badge-info">در انتظار پاسخ</span>
+
+          </td>
+          <td>{{car.dataCreate|persianTimeAgo}}</td>
+          <td>{{car.dataModified|persianTimeAgo}}</td>
+          <td>
+            <button pButton type="button" icon="pi pi-search-plus" (click)="TikectContentView(car.id)" tooltipPosition="top" pTooltip="مشاهده و پاسخ"></button>
+
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-dialog header="درخواست پشتیبانی جدید" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
+  showEffect="fade" [modal]="true" styleClass="mydialog" [style]="{width: '60vw'}">
+  <form name="form" #f="ngForm" novalidate class="mydialog">
+    <div class="modal-body">
+      <div class="p-grid ui-fluid">
+        <div class="row" style="width: 100%;">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">عنوان</label>
+
+              <input #title="ngModel" pInputText type="text" required minlength="1" maxlength="150" id="TitleTitke"
+                name="TitleTitke" class="" [(ngModel)]="TitleTitke"
+                [ngClass]="title.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">اولویت</label>
+
+              <p-dropdown name="Level" panelstyle="text-align: inherit;" styleClass="form-control custom-select"
+                [options]="Levels" [(ngModel)]="Level" optionLabel="name"></p-dropdown>
+
+            </div>
+          </div>
+        </div>
+        <div class="row" style="width: 100%;">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-label">متن پیغان</label>
+              <angular-editor [placeholder]="'متن پیغام...'" id="Content"
+              name="Content" [(ngModel)]="TitleContent" [config]="editorConfig"></angular-editor>
+
+              <!-- <textarea #Content="ngModel" pInputText required rows="10" minlength="1" maxlength="550" id="Content"
+                name="Content" class="" [(ngModel)]="TitleContent"
+                [ngClass]="Content.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'"></textarea> -->
+            </div>
+          </div>
+        </div>
+        <div class="custom-file">
+          <div class="form-group">
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+              accept=".jpg,.gif,.png,.jpge,.zip,.pdf,.doc,.docx" (change)="onFileSelected($event)">
+            <label class="custom-file-label" for="inputGroupFile01">{{!SelectedFile?'انتخاب پیوست':SelectedFile.name}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" [disabled]=" f.form.invalid" class="mt-2 btn btn-block btn-primary mt-1 mb-1" (click)="save()">ارسال</button>
+      <!-- <button type="button"  class="btn btn-primary" (click)="save()">ذخیره</button> -->
+    </div>
+  </form>
+</p-dialog>

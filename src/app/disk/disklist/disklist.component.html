@@ -7,7 +7,7 @@
     <h2 class="mb-0">لیست های بیمه</h2>
   </div>
   <div class="card-body">
-    <p-table #dt [columns]="cols" [value]="DiskList" [rowHover]="true" selectionMode="single"
+    <p-table #dt [resizableColumns]="true" [columns]="cols" [value]="DiskList" [rowHover]="true"[responsive]="true"
       [(selection)]="selectedDisk" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10"
       [showCurrentPageReport]="true" currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})">
       <ng-template pTemplate="caption">
@@ -21,7 +21,7 @@
               type="button" pButton icon="pi pi-plus" label="اقدامات"></button>
             <div class="dropdown-menu" x-placement="bottom-start"
               style="position: absolute; transform: translate3d(-65px, 27px, 0px); top: 0px; left: 0px; will-change: transform;">
-              <a class="dropdown-item" (click)="showDialogToAdd()"><i class="fas fa-plus mr-2"></i>افزودن کارگاه جدید
+              <a class="dropdown-item" (click)="showDialogToAdd()"><i class="fas fa-plus mr-2"></i>افزودن لیست
                 جدید</a>
 
 
@@ -30,12 +30,13 @@
 
         </div>
       </ng-template>
-      <ng-template pTemplate="header" let-columns>
+      <ng-template pTemplate="header" let-columns >
         <tr>
-          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
             {{col.header}}
             <p-sortIcon [field]="col.field"></p-sortIcon>
           </th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData>
@@ -46,8 +47,14 @@
           <td>{{rowData.dsK_YY}}</td>
           <td>{{rowData.dsK_MM}}</td>
           <td>{{rowData.dsK_TTOTL | irc}}</td>
-          <td>{{rowData.dsK_TKOSO | irc}}</td>
-
+          <td>{{rowData.dsK_TKOSO +rowData.dsK_BIC + rowData.dsK_TBIME | irc}}</td>
+          <td>
+            <div class="text-center">
+              <button pButton type="button" (click)="deleterow(rowData)" icon="pi pi-trash" class="ui-button-danger" style="margin: 0 5px;font-size: small;" tooltipPosition="top" pTooltip="حذف لیست"></button>
+              <button pButton type="button" (click)="printrow(rowData)" icon="pi pi-print" class="ui-button-info" style="margin: 0 0 0 5px;font-size: small;" tooltipPosition="top" pTooltip="مشاهده لیست"></button>
+              <button pButton type="button" (click)="downloadfiles(rowData)" icon="pi pi-download" class="ui-button-success" style="font-size: small;"   pTooltip="دانلود فایل" tooltipPosition="top"></button>
+            </div>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary" let-rowData>
@@ -69,17 +76,19 @@
       <div class="p-grid ui-fluid">
         <div class="col-md-12">
           <div class="form-group">
-            <p-dropdown name="manufactureaddvaluid" #manufactureaddvaluidd="ngModel" id="manufactureaddvaluid" [style]="{'width':'100%','height':'100%','border':'none'}" required [options]="categurys" [(ngModel)]="manufactureaddvaluid" filter="true"
-            [ngClass]="manufactureaddvaluid ===0 ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
-            <ng-template let-item pTemplate="selectedItem" style="width: 300px">
-              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-            </ng-template>
-            <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
-              <div class="ui-helper-clearfix">
-                <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
-              </div>
-            </ng-template>
-          </p-dropdown>
+            <p-dropdown name="manufactureaddvaluid" #manufactureaddvaluidd="ngModel" id="manufactureaddvaluid"
+              [style]="{'width':'100%','height':'100%','border':'none'}" required [options]="categurys"
+              [(ngModel)]="manufactureaddvaluid" filter="true"
+              [ngClass]="manufactureaddvaluid ===0 ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
+              <ng-template let-item pTemplate="selectedItem" style="width: 300px">
+                <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+              </ng-template>
+              <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
+                <div class="ui-helper-clearfix">
+                  <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+                </div>
+              </ng-template>
+            </p-dropdown>
           </div>
         </div>
 
@@ -87,17 +96,15 @@
           <div class="col-md-6 row">
             <label class="col-md-4">سال عملکرد</label>
             <div class="col-md-8 ">
-              <input type="text" id="yy" name="yy" class="form-control"  matInput mask="0000" [showMaskTyped]="true"
-               [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [validation]="true" [(ngModel)]="yy"
-              />
+              <input type="text" id="yy" name="yy" class="form-control" matInput mask="0000" [showMaskTyped]="true"
+                [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [validation]="true" [(ngModel)]="yy" />
             </div>
           </div>
           <div class="col-md-6 row">
-            <label  class="col-md-4">ماه عملکرد</label>
+            <label class="col-md-4">ماه عملکرد</label>
             <div class="col-md-8">
-              <input type="text" id="mm" name="mm" class="form-control"  matInput mask="M0" [showMaskTyped]="true"
-               [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [validation]="true" [(ngModel)]="mm"
-              />
+              <input type="text" id="mm" name="mm" class="form-control" matInput mask="M0" [showMaskTyped]="true"
+                [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [validation]="true" [(ngModel)]="mm" />
 
             </div>
           </div>

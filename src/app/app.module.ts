@@ -17,6 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFondComponent } from './not-fond/not-fond.component';
 import { TitleService } from './core/_services/common/title.service';
 import { SeoService } from './core/_services/common/seo.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { GuardService } from './core/_services/common/guard.service';
 import { EmployeeModule } from './employee/employee.module';
@@ -24,6 +25,9 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
 import { ManumfactureModule } from './manumfacture/manumfacture.module';
 import { DiskModule } from './disk/disk.module';
+import { AccountingModule } from './accounting/accounting.module';
+import { TiketModule } from './tiket/tiket.module';
+
 const ngWizardConfig: NgWizardConfig = {
   theme: THEME.default
 };
@@ -39,6 +43,8 @@ const maskConfig: Partial<IConfig> = {
   ],
   imports: [
     DiskModule,
+    AccountingModule,
+    TiketModule,
     ManumfactureModule,
     FormsModule,
     ReactiveFormsModule,
@@ -47,13 +53,11 @@ const maskConfig: Partial<IConfig> = {
     CoreModule,
     EmployeeModule,
     HttpClientModule,
+    NgxSpinnerModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NgxMaskModule.forRoot(maskConfig),
     NgWizardModule.forRoot(ngWizardConfig),
-
-
-
 
   ],
   providers: [

@@ -7,7 +7,7 @@ export class EnvService {
   public apiUrl = '';
   public hogogmah = 0;
   public mazayaemah = 0;
-
+  public PayementUrl = '';
   // Whether or not to enable debug mode
   public enableDebug = true;
 

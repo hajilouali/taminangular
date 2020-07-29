@@ -120,7 +120,7 @@
               <label for="color" class="form-label">نام کارفرما</label>
             </div>
             <div class="col-md-12">
-              <input  pInputText [pKeyFilter]="blockSpecial" type="text" required minlength="1" maxlength="10" id="dsK_FARM" name="dsK_FARM"
+              <input  pInputText [pKeyFilter]="blockSpecial" type="text" required minlength="1" maxlength="100" id="dsK_FARM" name="dsK_FARM"
                 #dsK_FARM="ngModel" class="form-control" [(ngModel)]="selectedManufacturee.dsK_FARM"
                 [ngClass]="dsK_FARM.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
             </div>
@@ -158,7 +158,7 @@
               <label for="color" class="form-label">آدرس کارگاه</label>
             </div>
             <div class="col-md-12">
-              <textarea rows="5"  pInputText [pKeyFilter]="blockSpecial" type="text" required minlength="1" maxlength="10" id="dsK_ADRS" name="dsK_ADRS"
+              <textarea rows="5"  pInputText [pKeyFilter]="blockSpecial" type="text" required minlength="1" maxlength="100" id="dsK_ADRS" name="dsK_ADRS"
                 #dsK_ADRS="ngModel" class="form-control" [(ngModel)]="selectedManufacturee.dsK_ADRS"
                 [ngClass]="dsK_ADRS.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'"></textarea>
             </div>

@@ -26,6 +26,7 @@ export class ManufactureListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.api.GetManufactoreeList().subscribe(res => {
       this.ManufactureeList = res.data;
     });
@@ -36,6 +37,7 @@ export class ManufactureListComponent implements OnInit {
       { field: 'moN_PYM', header: 'ردیف پیمان' },
       { field: 'dsK_RATE', header: 'نرخ بیمه' }
       ];
+    this.spinner.hide();
   }
   onRowSelect(event) {
     this.newmanufacturee = false;
@@ -49,6 +51,7 @@ export class ManufactureListComponent implements OnInit {
     this.displayDialog = true;
   }
   delete() {
+    this.spinner.show();
     Swal.fire({
       title: 'آیا از پاک کردن این کارگاه اطمینان دارید؟',
       text: 'قبل از حذف کارگاه لیست های صادره برای این کارگاه را حذف نمایید..',
@@ -82,21 +85,21 @@ export class ManufactureListComponent implements OnInit {
     });
       }
     });
-
+    this.spinner.hide();
   }
   save() {
     this.spinner.show();
     if (this.newmanufacturee) {
       this.api.AddManufactoree(this.selectedManufacturee).subscribe(res => {
         if (res.data === true) {
-        this.api.GetManufactoreeList().subscribe(ress => this.ManufactureeList = ress.data,error=> console.log('مشکل در بارگزاری اطلاعات'));
+        this.api.GetManufactoreeList().subscribe(ress =>
+           {this.ManufactureeList = ress.data; this.spinner.hide();},error => console.log('مشکل در بارگزاری اطلاعات'));
         this.newmanufacturee = false;
         this.selectedManufacturee =  {};
         this.displayDialog = false;
-        this.spinner.hide();
+
         }
       },error=> {
-        this.spinner.hide();
         Swal.fire({
           icon: 'error',
           title: 'خطا',
@@ -105,15 +108,17 @@ export class ManufactureListComponent implements OnInit {
         this.newmanufacturee = false;
         this.selectedManufacturee =  {};
         this.displayDialog = false;
+        this.spinner.hide();
       });
     } else if (!this.newmanufacturee) {
       this.api.UpdateManufactoree(this.selectedManufacturee).subscribe(res => {
         if (res.data === true) {
-        this.api.GetManufactoreeList().subscribe(ress => this.ManufactureeList = ress.data,error=> console.log('مشکل در بارگزاری اطلاعات'));
+        this.api.GetManufactoreeList().subscribe(ress =>
+           {this.ManufactureeList = ress.data;this.spinner.hide();},error=> console.log('مشکل در بارگزاری اطلاعات'));
         this.newmanufacturee = false;
         this.selectedManufacturee =  {};
         this.displayDialog = false;
-        this.spinner.hide();
+
         }
       },error=> {
         this.spinner.hide();
@@ -127,6 +132,7 @@ export class ManufactureListComponent implements OnInit {
         this.displayDialog = false;
       });
     }
+
   }
   cloneManufacturee(c: Manufacturee): Manufacturee {
     const car:Manufacturee =  {};

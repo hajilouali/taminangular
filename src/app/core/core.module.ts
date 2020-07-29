@@ -32,6 +32,14 @@ import {PanelModule} from 'primeng/panel';
 import {CardModule} from 'primeng/card';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { EnvServiceProvider } from './_services/env/env.service.provider';
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import {CheckboxModule} from 'primeng/checkbox';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
+import {TooltipModule} from 'primeng/tooltip';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 
 @NgModule({
@@ -69,6 +77,14 @@ import { EnvServiceProvider } from './_services/env/env.service.provider';
     PanelModule,
     CardModule,
     ScrollPanelModule,
+    VirtualScrollerModule,
+    CheckboxModule,
+    InputSwitchModule,
+    TriStateCheckboxModule,
+    TooltipModule,
+    InputNumberModule,
+    MessagesModule,
+    MessageModule
   ],
   providers: [ApiServiceService, CarService, NationalCodeService],
   exports: [
@@ -101,7 +117,15 @@ import { EnvServiceProvider } from './_services/env/env.service.provider';
     DragDropModule,
     PanelModule,
     CardModule,
+    InputNumberModule,
     ScrollPanelModule,
+    VirtualScrollerModule,
+    CheckboxModule,
+    InputSwitchModule,
+    TriStateCheckboxModule,
+    TooltipModule,
+    MessagesModule,
+    MessageModule
   ]
 })
 export class CoreModule { }

@@ -1,0 +1,108 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> در حال بارگزاری... </p>
+</ngx-spinner>
+<p-toast></p-toast>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-8" style="margin: auto;">
+        {{userinfo.fullName}}
+      </div>
+      <div class="col-md-4">
+        <img src="{{appConfig.apiEndpoint +userinfo.userImage}}" alt="" class="profile-photo-lg">
+
+
+      </div>
+    </div>
+    <h2>جزئیات تیکت</h2>
+    ------------------------<br>
+
+    <h4>شماره تیکت</h4>
+    <h4>{{tiketcontent.id}}</h4>
+    <h4>الویت</h4>
+    <span *ngIf="tiketcontent.level===1" class="badge badge-pill badge-default">عادی</span>
+    <span *ngIf="tiketcontent.level===2" class="badge badge-pill badge-danger">مهم</span>
+    <span *ngIf="tiketcontent.level===3" class="badge badge-pill badge-warning">خیلی مهم</span>
+    <h4>وضعیت</h4>
+    <span *ngIf="tiketcontent.isAdminSide" class="badge badge-success">پاسخ داده شده</span>
+    <span *ngIf="!tiketcontent.isAdminSide" class="badge badge-info">در انتظار پاسخ</span>
+    <h4> ایجاد</h4>
+    <p>{{tiketcontent.dataCreate.toString()|persianTimeAgo}}</p>
+    <h4> بروز رسانی</h4>
+    <p>{{tiketcontent.dataModified.toString()|persianTimeAgo}}</p>
+  </div>
+  <div class="col-md-9" style="margin: auto;">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>{{tiketcontent.title}}</h2>
+
+      </div>
+
+    </div>
+    <div class="card shadow overflow-hidden">
+      <div class="card-body">
+        <div class="row">
+          <div>
+            <h4>پیام ها</h4><br>
+
+          </div>
+        </div>
+        <div *ngFor="let item of tiketcontent.tiketContents" class="message clear" data-id="876677">
+          <div class="col-md-12">
+            <div class="header">
+              <span [ngClass]="!item.isAdminSide?'text-success':'text-warning'">
+                {{item.user}}
+              </span>
+              <br>
+              <span *ngIf="!item.isAdminSide" class="date">
+                کاربر
+                &nbsp;-&nbsp;
+
+                {{item.dataCreate|persianDate}} {{item.dataCreate|date:'HH:mm'}}
+              </span>
+              <span *ngIf="item.isAdminSide" class="date">
+                پشتیبانی
+                &nbsp;-&nbsp;
+
+                {{item.dataCreate|persianDate}} {{item.dataCreate|date:'HH:mm'}}
+              </span>
+            </div>
+
+            <div class="text">
+              <div [innerHTML]="item.text"></div>
+
+
+              <br>
+              <div *ngIf="item.fileURL">
+                 فایل پیوست
+                <button  class="btn btn-outline-warning mt-1 mb-1" type="button">
+                  <span class="btn-inner--icon"><i class="fe fe-download"></i></span>
+                  <span class="btn-inner--text">{{item.fileURL}} </span>
+                </button>
+              </div>
+
+              <br>--------------<br>
+            </div>
+
+          </div>
+        </div>
+        <h3>ارسال پاسخ</h3>
+        <angular-editor [placeholder]="'متن پیغام...'" id="Content" name="Content" [(ngModel)]="TitleContentrespons"
+          [config]="editorConfig"></angular-editor>
+        <div class="custom-file">
+          <div class="form-group">
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+              accept=".jpg,.gif,.png,.jpge,.zip,.pdf,.doc,.docx" (change)="onFileSelected($event)">
+            <label class="custom-file-label"
+              for="inputGroupFile01">{{!SelectedFile?'انتخاب پیوست':SelectedFile.name}}</label>
+          </div>
+        </div>
+        <button type="button"  class="mt-2 btn btn-block btn-primary mt-1 mb-1" (click)="save()">ارسال</button>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

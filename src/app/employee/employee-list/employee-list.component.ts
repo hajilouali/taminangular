@@ -61,32 +61,34 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+    this.spinner.show();
     this.api.GetEmployeList().subscribe(res => {
       this.cars = res.data;
-    });
-    this.api.getPlaces().subscribe(res => {
-      res.data.forEach(element => {
-        this.places.push({
-          label: element.dsW_IDPLC,
-          value: element.dsW_IDPLC,
-          title: element.code
+      this.api.getPlaces().subscribe(ress => {
+        ress.data.forEach(element => {
+          this.places.push({
+            label: element.dsW_IDPLC,
+            value: element.dsW_IDPLC,
+            title: element.code
 
+          });
         });
-      });
-    });
-    this.api.getcountry().subscribe(res => {
-      res.data.forEach(element => {
-        this.nat.push({
-          value: element.dsW_NAT,
-          label: element.dsW_NAT
-        })
-      });
-    });
-    this.api.GetListEmployeList().subscribe(res => {
-      res.data.forEach(element => {
-        this.categurys.push({
-          label: element.title,
-          value: element.id
+        this.api.getcountry().subscribe(resss => {
+          resss.data.forEach(element => {
+            this.nat.push({
+              value: element.dsW_NAT,
+              label: element.dsW_NAT
+            });
+          });
+          this.api.GetListEmployeList().subscribe(ressss => {
+            ressss.data.forEach(element => {
+              this.categurys.push({
+                label: element.title,
+                value: element.id
+              });
+            });
+            this.spinner.hide();
+          });
         });
       });
     });
@@ -98,7 +100,6 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
             { field: 'peR_NATCOD', header: 'کد ملی' },
             { field: 'job.dsW_OCP', header: 'شغل' }
         ];
-
   }
   ngAfterViewInit() {
   }
@@ -128,6 +129,7 @@ countrybouten(event) {
   this.car.dsW_NAT = event.value;
 }
 save() {
+        this.spinner.show();
         const cars = [...this.cars];
         const normaliz = this.nationalCodeService.normalize(this.car.peR_NATCOD);
         const isvalidd = this.nationalCodeService.isValid(normaliz);
@@ -135,17 +137,31 @@ save() {
           if (this.car.jobs.dsW_OCP) {
             if (this.newCar) {
               this.api.AddEmployee(this.car).subscribe(res => {
-                this.api.GetEmployeList().subscribe(ress => {
-                  this.cars = ress.data;
-                  this.car =  {};
-                  this.car.dsW_BDATE = '';
-                  this.displayDialog = false;
-                });
+                if(res.data) {
+                  this.api.GetEmployeList().subscribe(ress => {
+                    this.cars = ress.data;
+                    this.car =  {};
+                    this.car.dsW_BDATE = '';
+                    this.displayDialog = false;
+                    this.spinner.hide();
+                  });
+                }
+                else {
+                  Swal.fire({
+                    // position: 'center-end',
+                    icon: 'warning',
+                    title: 'کد ملی وارد شده تکراری می باشد.',
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  this.spinner.hide();
+                }
               }, error => console.log('مشکل در برقراری ارتباط با سرور '));
             } else {
               this.api.UpdateEmployee(this.car).subscribe(res => {
                 this.api.GetEmployeList().subscribe(ress => {
                   this.cars = ress.data;
+                  this.spinner.hide();
                 });
                 this.car =  {};
                 this.car.dsW_BDATE = '';
@@ -158,15 +174,18 @@ save() {
             this.newCar = false;
             this.displayDialog = true;
             this.text = this.car.jobs;
+            this.spinner.hide();
           }
         } else {
           alert('کد ملی نامعتبر است');
           this.newCar = false;
           this.displayDialog = true;
           this.text = this.car.jobs;
+          this.spinner.hide();
         }
     }
 delete() {
+
   Swal.fire({
     title: 'آیا از پاک کردن این کارمند اطمینان دارید؟',
     text: 'قبل از حذف اطمینان حاصل فرماید که این کارمند در لیست ماهانه ای حضور نداشته باشد.',
@@ -178,6 +197,7 @@ delete() {
     confirmButtonText: 'بله پاک کن!'
   }).then((result) => {
     if (result.value) {
+      this.spinner.show();
       this.api.DeleteEmployee(this.selectedCar.id).subscribe(res => {
         Swal.fire({
           // position: 'center-end',
@@ -186,13 +206,14 @@ delete() {
           showConfirmButton: false,
           timer: 1500
         });
-        this.api.GetEmployeList().subscribe(ress => this.cars = ress.data);
+        this.api.GetEmployeList().subscribe(ress => {this.cars = ress.data; this.spinner.hide();});
         this.car =  {};
         this.displayDialog = false;
       });
     }
   });
     // document.getElementById('closeModalButton').click();
+
 }
 
 onRowSelect(event) {
@@ -313,7 +334,9 @@ onRowEditInit(car: EmployeeExcel) {
 
   this.clonedEmployeeExcel = car;
 }
-
+changeStatus(event){
+  this.car.isKarfarma = !this.car.isKarfarma;
+}
 onRowEditSave(car: EmployeeExcel) {
   const variabale  = car;
   this.ExcelEmployee = this.ExcelEmployee.filter(obj => obj !== this.clonedEmployeeExcel);
@@ -370,8 +393,9 @@ saveexcellist() {
   this.displayDialogExcel = false;
 }
 onUploaddbf() {
+  this.spinner.show();
   if (this.SelectedFiledbf.size <= 5242880 && this.validateee(this.SelectedFiledbf.name) === true && this.SelectedFiledbf != null) {
-    this.spinner.show();
+
     const fd = new FormData();
     fd.append('Image', this.SelectedFiledbf, this.SelectedFiledbf.name);
     this.api.AddEmployeebyDBF(fd, this.categuryexcel !== undefined ? this.categuryexcel : 0).subscribe(res => {
@@ -402,7 +426,10 @@ onUploaddbf() {
         text: 'تنها فایل های مورد قبول با پسوند dbf با حداکثر حجم 5 مگ میباشد',
       });
       this.spinner.hide();
-  }}
+
+  }
+
+}
 }
 
 export interface EmployeeExcel {

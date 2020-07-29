@@ -1,3 +1,4 @@
+import { PrintDiskComponent } from './print-disk/print-disk.component';
 import { AddDiskComponent } from './add-disk/add-disk.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'ListDisk', component: MainLayoutComponent, data: { title: [' دیسک'] }, canActivate: [GuardService] , children: [
     {path: '', component: DisklistComponent}
   ]},
+
 ];
 
 @NgModule({

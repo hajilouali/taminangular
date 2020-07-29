@@ -13,10 +13,11 @@ import {FieldsetModule} from 'primeng/fieldset';
 import { DisklistComponent } from './disklist/disklist.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { EnvServiceProvider } from '../core/_services/env/env.service.provider';
+import { PrintDiskComponent } from './print-disk/print-disk.component';
 // import {InputNumberModule} from './../core/_services/inputnumber/public_api';
 
 @NgModule({
-  declarations: [AddDiskComponent, DisklistComponent],
+  declarations: [AddDiskComponent, DisklistComponent, PrintDiskComponent],
   imports: [
     CommonModule,
     CoreModule,

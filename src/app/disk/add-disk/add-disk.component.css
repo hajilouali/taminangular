@@ -19,3 +19,9 @@ li{
   border-radius: 3px;
   width: 100%;
 }
+.pi-plus:hover{
+  cursor: pointer;
+}
+.ui-table-scrollable-header-box{
+  padding-right: 0 !important;
+}

@@ -1,3 +1,6 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> در حال بارگزاری... </p>
+</ngx-spinner>
 <div class="card shadow overflow-hidden">
   <div class="card-body">
     <div class="row">
@@ -20,7 +23,8 @@
                     <label class="control-label form-label" for="userName1" style="font-size: 12px;">کد کارگاه:</label>
                   </div>
                   <div class="col-lg-8">
-                    <input class="formcontrolcustom" pInputText id="dsK_ID" name="dsK_ID" disabled type="text"
+                    <input class="formcontrolcustom" pInputText id="diskinfo.manufactureDto.dsK_ID"
+                      name="diskinfo.manufactureDto.dsK_ID" disabled type="text"
                       value="{{diskinfo.manufactureDto.dsK_ID}}">
                   </div>
                 </div>
@@ -120,7 +124,7 @@
                   </div>
                   <div class="col-lg-9">
                     <input class="formcontrolcustom" disabled id="dsK_TROOZ" name="dsK_TROOZ" type="text"
-                      value="{{diskinfo.dsK_TROOZ}}">
+                      value="{{diskinfo.dsK_TDD}}">
                   </div>
                 </div>
               </div>
@@ -165,8 +169,8 @@
                       روزانه:</label>
                   </div>
                   <div class="col-lg-6">
-                    <input class="formcontrolcustom" pInputText disabled id="dsK_TROOZ" name="dsK_TROOZ" type="text"
-                      value="{{diskinfo.dsK_TROOZ | irc}}">
+                    <input class="formcontrolcustom" pInputText disabled id="dsK_TROOZneh" name="dsK_TROOZneh"
+                      type="text" value="{{diskinfo.dsK_TROOZ | number}}">
                   </div>
                 </div>
               </div>
@@ -180,7 +184,7 @@
                   </div>
                   <div class="col-lg-6">
                     <input class="formcontrolcustom" disabled id="dsK_TMAZ" name="dsK_TMAZ" type="text"
-                      value="{{diskinfo.dsK_TMAZ | irc}}">
+                      value="{{diskinfo.dsK_TMAH | number}}">
                   </div>
                 </div>
               </div>
@@ -194,7 +198,7 @@
                   </div>
                   <div class="col-lg-6">
                     <input class="formcontrolcustom" disabled id="dsK_TMASH" name="dsK_TMASH" type="text"
-                      value="{{diskinfo.dsK_TMASH | irc}}">
+                      value="{{diskinfo.dsK_TMAZ | number}}">
                   </div>
                 </div>
               </div>
@@ -211,7 +215,7 @@
                   </div>
                   <div class="col-lg-6">
                     <input class="formcontrolcustom" disabled id="dsK_TTOTL" name="dsK_TTOTL" type="text"
-                      value="{{diskinfo.dsK_TTOTL | irc}}">
+                      value="{{diskinfo.dsK_TTOTL | number}}">
                   </div>
                 </div>
               </div>
@@ -223,8 +227,8 @@
                     <label class="control-label form-label" for="dsK_RATE" style="font-size: 12px;">نرخ حق بیمه:</label>
                   </div>
                   <div class="col-lg-6">
-                    <input class="formcontrolcustom" id="dsK_RATE" name="dsK_RATE" type="text"
-                      value="{{diskinfo.manufactureDto.dsK_RATE }}">
+                    <input disabled class="formcontrolcustom" id="dsK_RATE" name="dsK_RATE" type="text"
+                      [(ngModel)]="diskinfo.manufactureDto.dsK_RATE">
                   </div>
                 </div>
               </div>
@@ -238,7 +242,7 @@
                   </div>
                   <div class="col-lg-6">
                     <input class="formcontrolcustom" disabled id="dsK_TBIME" name="dsK_TBIME" type="text"
-                      value="{{diskinfo.dsK_TBIME | irc}}">
+                      value="{{diskinfo.dsK_TBIME | number}}">
                   </div>
                 </div>
               </div>
@@ -254,8 +258,8 @@
                       کارفرما:</label>
                   </div>
                   <div class="col-lg-6">
-                    <input class="formcontrolcustom" id="dsK_TKOSO" name="dsK_TKOSO" type="text"
-                      value="{{diskinfo.dsK_TKOSO | irc}}">
+                    <input class="formcontrolcustom" id="dsK_TKOSO" name="dsK_TKOSO" type="number"
+                      value="{{diskinfo.dsK_TKOSO }}" (input)="TKOSOchange($event.target.value)">
                   </div>
                 </div>
               </div>
@@ -270,8 +274,8 @@
                   <div class="col-lg-6">
                     <!-- <p-inputnumber [(ngModel)]="diskinfo.dsK_BIC"></p-inputnumber> -->
 
-                    <input class="formcontrolcustom" id="dsK_BIC" name="dsK_BIC" type="text"
-                      [ngModel]="diskinfo.dsK_BIC | irc" (ngModelChange)="diskinfo.dsK_BIC=$event">
+                    <input class="formcontrolcustom" id="dsK_BIC" name="dsK_BIC" type="number"
+                      value="{{diskinfo.dsK_BIC}}" (input)="BICchange($event.target.value)">
                   </div>
                 </div>
               </div>
@@ -280,11 +284,12 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-6">
-                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع دستمزد و مزایای
-                      ماهانه مشمول:</label>
+                    <label class="control-label form-label" for="userName1" style="font-size: 12px;">جمع پرداختی
+                      :</label>
                   </div>
                   <div class="col-lg-6">
-                    <input class="formcontrolcustom" id="userName1" name="userName" type="text">
+                    <input class="formcontrolcustom" id="userName1" disabled name="userName" type="text"
+                      value="{{disktotal |number}}">
                   </div>
                 </div>
               </div>
@@ -298,9 +303,22 @@
 
   </div>
 </div>
-
+<div class="">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <p-button icon="pi pi-print" iconPos="left" label="مشاهده و پرینت" styleClass="ui-button-info" (click)="print()"
+          target="_blank"></p-button>
+      </div>
+      <div class="col-md-6 text-center">
+        <p-button icon="pi pi-check" iconPos="left" label="تایید لیست" styleClass="ui-button-success" (click)="save()">
+        </p-button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <div class="card shadow">
       <div class="card-body">
         <div class=" p-col-nogutter drag-column">
@@ -317,86 +335,144 @@
               </div>
             </ng-template>
           </p-dropdown>
-          <p-scrollPanel [style]="{width: '100%', height: '400px'}">
-            <ul *ngIf="selectedcat===0" style="margin:0;padding:0;padding:1em;line-height:1.5">
+          <div *ngIf="selectedcat===0">
+            <input  pInputText type="text" placeholder="جستجو در لیست کارکنان" (input)="searchemploye($event.target.value)" class="form-control">
 
-              <li *ngFor="let car of availableEmployee" class="ui-helper-clearfix" pDraggable="cars"
-                (onDragStart)="dragStart($event,car)" (onDragEnd)="dragEnd($event)">
-                <p-card>
-                  <p-header>
-                    <div class="row">
-                    </div>
-                  </p-header>
+            <p-virtualScroller  #vs0 [value]="availableEmployee" scrollHeight="500px"
+            [itemSize]="150">
+            <ng-template pTemplate="item" let-car>
+              <p-card>
+                <p-header>
                   <div class="row">
-                    <div class="col-md-2">
-                      <i class="pi pi-plus" style="font-size: 35px "></i>
-                    </div>
-                    <div class="col-md-10">
-                      <p style="margin:auto">{{car.dsW_FNAME}} {{car.dsW_LNAME}}</p>
-                      <p>شماره بیمه : {{car.dsW_ID1}} </p>
-                      <p> شماره ملی : {{car.peR_NATCOD}}</p>
-                    </div>
                   </div>
-                  <p-footer>
-                  </p-footer>
-                </p-card>
+                </p-header>
+                <div class="row">
+                  <div class="col-md-2">
+                    <a (click)="dragStartbbyclick(car)">
+                      <i class="pi pi-plus" style="font-size: 35px "></i>
 
-              </li>
+                    </a>
+                  </div>
+                  <div class="col-md-10">
+                    <p style="margin:auto">{{car.dsW_FNAME}} {{car.dsW_LNAME}}</p>
+                    <p>شماره بیمه : {{car.dsW_ID1}} </p>
+                    <p> شماره ملی : {{car.peR_NATCOD}}</p>
+                  </div>
+                </div>
+                <p-footer>
+                </p-footer>
+              </p-card>
+            </ng-template>
+          </p-virtualScroller>
+          </div>
 
-            </ul>
-            <ul *ngIf="selectedcat===1" style="margin:0;padding:0;padding:1em;line-height:1.5">
-
-              <li *ngFor="let car of availableEmployeeByList" class="ui-helper-clearfix" pDraggable="cars"
-                (onDragStart)="dragListStart($event,car)" (onDragEnd)="dragListEnd($event)">
-                <p-card>
-                  <p-header>
-                    <div class="row">
-                    </div>
-                  </p-header>
+          <p-virtualScroller *ngIf="selectedcat===1" #vs1 [value]="availableEmployeeByList" scrollHeight="500px"
+            [itemSize]="150">
+            <ng-template pTemplate="item" let-car>
+              <p-card>
+                <p-header>
                   <div class="row">
-                    <div class="col-md-2">
-                      <i class="pi pi-plus" style="font-size: 35px "></i>
-                    </div>
-                    <div class="col-md-10">
-                      <p style="margin:auto">{{car.Title}}</p>
-
-                    </div>
                   </div>
-                  <p-footer>
-                  </p-footer>
-                </p-card>
+                </p-header>
+                <div class="row">
+                  <div class="col-md-2">
+                    <a (click)="dragStartbbyclicklist(car)">
+                      <i class="pi pi-plus" style="font-size: 35px "></i>
 
-              </li>
+                    </a>
+                  </div>
+                  <div class="col-md-10">
+                    <p style="margin:auto">{{car.Title}}</p>
 
-            </ul>
-          </p-scrollPanel>
+                  </div>
+                </div>
+                <p-footer>
+                </p-footer>
+              </p-card>
+            </ng-template>
+          </p-virtualScroller>
+          <p-virtualScroller  *ngIf="selectedcat===2" #vs2 [value]="avalibaleEmployeeByDisk" scrollHeight="500px"
+            [itemSize]="150">
+            <ng-template pTemplate="item" let-car>
+              <p-card>
+                <p-header>
+                  <div class="row">
+                  </div>
+                </p-header>
+                <div class="row">
+                  <div class="col-md-2">
+                    <a (click)="dragStartbbyclicklistDisk(car)">
+                      <i class="pi pi-plus" style="font-size: 35px "></i>
+
+                    </a>
+                  </div>
+                  <div class="col-md-10">
+                    <p style="margin:auto">{{car.Title}}</p>
+                    <p style="margin:auto">سال : {{car.YY}}</p>
+                    <p style="margin:auto">ماه : {{car.MM}}</p>
+                  </div>
+                </div>
+                <p-footer>
+                </p-footer>
+              </p-card>
+            </ng-template>
+          </p-virtualScroller>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-6 ">
+  <div class="col-lg-8 ">
     <div class="card shadow">
       <div class="card-body">
 
-        <div class="drop-column" pDroppable="cars" (onDrop)="drop($event)"
+        <div  class="drop-column" pDroppable="cars" (onDrop)="drop($event)"
           [ngClass]="{'ui-highlight-car':draggedEmployee}">
-          <h3>Drag and Drop to Table</h3>
+          <h3>نفرات لیست</h3>
 
-          <p-table [value]="selectedeEmployes">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>نام</th>
-                <th>نام خانوادگی</th>
-                <th>شماره بیمه</th>
-                <th>شماره ملی</th>
+          <p-table #dtselected [columns]="cols" [value]="orginselectedemployee" [lazy]="true" [scrollable]="true" scrollHeight="500px">
+            <ng-template pTemplate="caption" >
+              <div style="text-align: right">
+                  <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                  <input type="text" pInputText size="50" placeholder="جستجو در کارمندان لیست" (input)="selectedfilterGlobal($event.target.value)" style="width:auto">
+              </div>
+          </ng-template>
+
+            <ng-template pTemplate="header" let-columns style="padding-right: 0;" pResizableColumn>
+
+
+                <tr style="padding: 0;font-size: 13px !important;">
+                  <th style="width: 5%;font-size: 13 !important;;"></th>
+                 <th style="width: 10%;font-size: 13 !important;;">نام</th>
+                <th style="width: 15%;font-size: 13 !important;;">نام خانوادگی</th>
+                <th style="width: 10%;font-size: 13 !important;;">شماره بیمه</th>
+                <th style="width: 12%;font-size: 13 !important;;">شماره ملی</th>
+                <th style="width: 8%;font-size: 13 !important;;">کارکرد(روز)</th>
+                <th style="width: 12%;font-size: 13 !important;;">حقوق و مزایا ماهانه</th>
+                <th style="width: 12%;font-size: 13 !important;;">حق بیمه</th>
+
+                <th style="width: 16%;"></th>
+                <!-- <th style="width: 2.5%;"></th> -->
               </tr>
+
+
             </ng-template>
-            <ng-template pTemplate="body" let-car>
-              <tr>
-                <td>{{car.employeeDto.dsW_FNAME}}</td>
-                <td>{{car.employeeDto.dsW_LNAME}}</td>
-                <td>{{car.employeeDto.dsW_ID1}}</td>
-                <td>{{car.employeeDto.peR_NATCOD}}</td>
+            <ng-template pTemplate="body" let-car let let-i="rowIndex" >
+              <tr style="font-size: 13px;">
+                <th style="text-align: center;padding: 0;border: 1px solid #c8c8c8;width: 5%;">{{i+1}}</th>
+                <td style="text-align: center;padding: 0;width: 10%;">{{car.employeeDto.dsW_FNAME}}</td>
+                <td style="text-align: center;padding: 0;width: 15%;">{{car.employeeDto.dsW_LNAME}}</td>
+                <td style="text-align: center;padding: 0;width: 10%;">{{car.employeeDto.dsW_ID1}}</td>
+                <td style="text-align: center;padding: 0;width: 12%;">{{car.employeeDto.peR_NATCOD}}</td>
+                <td style="text-align: center;padding: 0;width: 8%;">{{car.dsW_DD}}</td>
+                <td style="text-align: center;padding: 0;width: 12%;">{{car.dsW_MASH |number}}</td>
+                <td style="text-align: center;padding: 0;width: 12%;">{{car.dsW_BIME |number}}</td>
+                <td style="width: 16%;">
+                  <div class="row">
+                    <button><span class="badge badge-info" (click)="editerow(car)">ویرایش</span></button>
+                    <button><span class="badge badge-warning" (click)="deletrow(car)">حذف</span></button>
+                  </div>
+
+                </td>
               </tr>
             </ng-template>
           </p-table>
@@ -409,120 +485,133 @@
   </div>
 </div>
 <p-dialog [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsW_ROOZ" style="font-size: 12px;">دستمزد روزانه</label>
+  <form name="form" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsW_ROOZ1" style="font-size: 12px;">دستمزد روزانه</label>
+            </div>
+            <div class="col-lg-6">
+              <input class="formcontrolcustom" (ngModelChange)="calculatebim()" min="0" id="dsW_ROOZ1" name="dsW_ROOZ1"
+                type="number" [(ngModel)]="worktemp.dsW_ROOZ">
+            </div>
           </div>
-          <div class="col-lg-6">
-            <input class="formcontrolcustom" (ngModelChange)="calculatebim()" id="dsW_ROOZ" name="dsW_ROOZ" type="number"
-               [(ngModel)]="worktemp.dsW_ROOZ">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsK_TMAZ1" style="font-size: 12px;">مزایای ماهانه</label>
+            </div>
+            <div class="col-lg-6">
+              <input class="formcontrolcustom" min="0" (ngModelChange)="calculatebim()" id="dsK_TMAZ1" name="dsK_TMAZ1"
+                type="number" [(ngModel)]="worktemp.dsW_MAZ">
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsK_TMAZ" style="font-size: 12px;">مزایای ماهانه</label>
-          </div>
-          <div class="col-lg-6">
-            <input class="formcontrolcustom" (ngModelChange)="calculatebim()" id="dsK_TMAZ" name="dsK_TMAZ" type="number"
-              [(ngModel)]="worktemp.dsW_MAZ">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsW_SDATE" style="font-size: 12px;">تاریخ شروع به کار</label>
-          </div>
-          <div class="col-lg-6">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsW_SDATE1" style="font-size: 12px;">تاریخ شروع به
+                کار</label>
+            </div>
+            <div class="col-lg-6">
 
-            <input class="formcontrolcustom" matInput mask="{{masket}}" [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [showMaskTyped]="true" id="dsW_SDATE" name="dsW_SDATE" type="text"
-             [(ngModel)]="worktemp.dsW_SDATE" (ngModelChange)="calculatebim()">
+              <input class="formcontrolcustom" mask="0000/m0/d0" [dropSpecialCharacters]="false"
+                [clearIfNotMatch]="true" [showMaskTyped]="true" id="dsW_SDATE1" name="dsW_SDATE1" type="text"
+                [(ngModel)]="worktemp.dsW_SDATE" (ngModelChange)="calculatebim()">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsW_EDATE1" style="font-size: 12px;">تاریخ پایان کار</label>
+            </div>
+            <div class="col-lg-6">
+              <input class="formcontrolcustom" mask="0000/M0/d0" [dropSpecialCharacters]="false"
+                [clearIfNotMatch]="true" [showMaskTyped]="true" id="dsW_EDATE1" name="dsW_EDATE1" type="text"
+                [(ngModel)]="worktemp.dsW_EDATE" (ngModelChange)="calculatebim()">
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsW_EDATE" style="font-size: 12px;">تاریخ پایان کار</label>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsW_DD1" style="font-size: 12px;">تعداد روز کاری</label>
+            </div>
+            <div class="col-lg-6">
+              <input class="formcontrolcustom" id="dsW_DD111" name="dsW_DD111" type="number"
+                [(ngModel)]="worktemp.dsW_DD" (ngModelChange)="calculatebimchange()" min="0" max="31">
+            </div>
           </div>
-          <div class="col-lg-6">
-            <input class="formcontrolcustom" matInput mask="{{masket}}" [clearIfNotMatch]="true" [dropSpecialCharacters]="false" [showMaskTyped]="true" id="dsW_EDATE" name="dsW_EDATE" type="text"
-             [(ngModel)]="worktemp.dsW_EDATE"  (ngModelChange)="calculatebim()">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsW_MAH1" style="font-size: 12px;">دستمزد ماهانه</label>
+            </div>
+            <div class="col-lg-6">
+              <input class="formcontrolcustom" disabled id="dsW_MAH1" name="dsW_MAH1" type="text"
+                value="{{worktemp.dsW_MAH | number}}">
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsW_DD" style="font-size: 12px;">تعداد روز کاری</label>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsW_MASH1" style="font-size: 12px;">جمع کل دستمزد و مزایای
+                ماهانه </label>
+            </div>
+            <div class="col-lg-6">
+              <input class="formcontrolcustom" disabled id="dsW_MASH1" name="dsW_MASH1" type="text"
+                value="{{worktemp.dsW_MASH | number}}">
+            </div>
           </div>
-          <div class="col-lg-6">
-            <input class="formcontrolcustom" id="dsW_DD" name="dsW_DD" type="number"
-            [(ngModel)]="worktemp.dsW_DD" (ngModelChange)="calculatebim()">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6 ">
+              <label class="control-label form-label" for="dsW_BIME1" style="font-size: 12px;">حق بیمه سهم بیمه
+                شده</label>
+            </div>
+            <div class="col-lg-6">
+              <input class="formcontrolcustom" disabled id="dsW_BIME1" name="dsW_BIME1" type="text"
+                value="{{worktemp.dsW_BIME | number}}">
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsW_MAH" style="font-size: 12px;">دستمزد ماهانه</label>
-          </div>
-          <div class="col-lg-6">
-            <input class="formcontrolcustom" disabled id="dsW_MAH" name="dsW_MAH" type="text"
-            value="{{worktemp.dsW_MAH | number}}"  >
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsW_MASH" style="font-size: 12px;">جمع کل دستمزد و مزایای ماهانه </label>
-          </div>
-          <div class="col-lg-6">
-            <input class="formcontrolcustom" disabled id="dsW_MASH" name="dsW_MASH" type="text"
-            value="{{worktemp.dsW_MASH | number}}" >
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-lg-6 ">
-            <label class="control-label form-label" for="dsW_BIME" style="font-size: 12px;">حق بیمه سهم بیمه شده</label>
-          </div>
-          <div class="col-lg-6">
-            <input class="formcontrolcustom" disabled id="dsW_BIME" name="dsW_BIME" type="text"
-            value="{{worktemp.dsW_BIME | number}}" >
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p-footer>
-    <button pButton type="button" label="افزودن" (click)="addtolist()"></button>
-  </p-footer>
+
+    <p-footer>
+      <button *ngIf="!this.dragtype" pButton [disabled]="f.form.invalid" type="button" label="افزودن"
+        (click)="addtolist()"></button>
+      <button *ngIf="this.dragtype" pButton [disabled]="f.form.pristine || f.form.invalid" type="button" label="ذخیره"
+        (click)="edtetolist()"></button>
+
+    </p-footer>
+
+  </form>
 </p-dialog>

@@ -23,7 +23,12 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest",
-              "src/env.js"
+              "src/env.js",
+              "src/localization",
+              "src/scripts",
+              "src/reports",
+              "src/scripts/stimulsoft.reports.js",
+              "src/scripts/stimulsoft.viewer.js"
             ],
             "styles": [
               "node_modules/primeng/resources/themes/nova-light/theme.css",
@@ -44,25 +49,24 @@
               "src/assets/css/kamadatepicker.min.css",
               "node_modules/ng-wizard/themes/ng_wizard.min.css",
               "node_modules/ng-wizard/themes/ng_wizard_theme_circles.min.css",
-              "node_modules/primeflex/primeflex.css"
+              "node_modules/primeflex/primeflex.css",
+              "src/scripts/stimulsoft.viewer.office2013.whiteblue.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "src/assets/js/popper.js",
               "src/assets/plugins/bootstrap/js/bootstrap.min.js",
-              "src/assets/plugins/chart-echarts/echarts.js",
               "src/assets/plugins/peitychart/jquery.peity.min.js",
               "src/assets/plugins/peitychart/peitychart.init.js",
-              "src/assets/js/custom.js",
-              "src/assets/plugins/toggle-sidebar/horizontal-menu/webslidemenu.js",
               "src/assets/js/headerfix.js",
-              "src/assets/js/horizontal-dashboard-sales.js",
               "src/assets/js/ali.js",
               "src/assets/plugins/datatable/jquery.dataTables.min.js",
               "src/assets/plugins/datatable/dataTables.bootstrap4.min.js",
               "src/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.js",
               "src/assets/js/wizard.js",
               "src/assets/plugins/toggle-sidebar/js/sidemenu.js",
+              "src/scripts/stimulsoft.reports.js",
+              "src/scripts/stimulsoft.viewer.js"
             ]
           },
           "configurations": {

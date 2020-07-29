@@ -1,11 +1,14 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse  } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
+
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { error } from 'protractor';
 import { APP_CONFIG, IAppConfig } from 'src/app/app.config';
 import { EmployeeExcel } from 'src/app/employee/employee-list/employee-list.component';
+import { EnvService } from './env/env.service';
 export enum FactorType {
   PishFactor,
   Factor,
@@ -16,7 +19,12 @@ export enum FactorType {
 })
 export class ApiServiceService {
   baseurl = `${this.appConfig.apiEndpoint}`;
-  constructor(private http: HttpClient , private router: Router, @Inject(APP_CONFIG) private appConfig: IAppConfig) { }
+  constructor(
+    private env: EnvService,
+    private http: HttpClient ,
+    private router: Router,
+    @Inject(APP_CONFIG) private appConfig: IAppConfig
+    ) { }
   public login(credentials) {
     const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     let body = new HttpParams();
@@ -50,7 +58,6 @@ export class ApiServiceService {
 
  return this.http.get<UserBio>(`${this.appConfig.apiEndpoint}api/v1/Users/GetCorentUserBio`);
   }
-
   public TokenisTrue() {
 
    return this.http.get<baseDto>(`${this.appConfig.apiEndpoint}api/v1/Users/CheckTokenIsValid`);
@@ -131,12 +138,80 @@ export class ApiServiceService {
   public GetDiskList() {
     return this.http.get<getlist<KarMonthDto>>(`${this.appConfig.apiEndpoint}api/v1/Disk`);
   }
+  public AddDiskList(dto: KarMonthDto) {
+    return this.http.post<get<KarMonthDto>>(`${this.appConfig.apiEndpoint}api/v1/Disk/AddKarMonth`, dto);
+  }
+  public AddWorkDiskList(id: number, dto: WorkMonthDto[]) {
+    return this.http.post<baseDto>(`${this.appConfig.apiEndpoint}api/v1/Disk/WorkMonth/${id}`, dto);
+  }
   public GetDiskbyid(id: number) {
     return this.http.get<get<KarMonthDto>>(`${this.appConfig.apiEndpoint}api/v1/Disk/${id}`);
   }
+  public GetISFree() {
+    return this.http.get<get<siteinfo>>(`${this.appConfig.apiEndpoint}api/v1/Disk/GetAppSellState`);
+  }
+  public GetWorksMonthByKarMonthId(id: number) {
+    return this.http.get<getlist<WorkMonthDto>>(`${this.appConfig.apiEndpoint}api/v1/Disk/GetWorksMonthByKarMonthId/${id}`);
+  }
+  public deleteWorksMonth(id: number) {
+    return this.http.delete<baseDto>(`${this.appConfig.apiEndpoint}api/v1/Disk/deletKarMonthbyId/${id}`);
+  }
+  public createFile(id: number) {
+    return this.http.get<baseDto>(`${this.appConfig.apiEndpoint}api/v1/Disk/CreateDBF/${id}`);
+  }
+  public GetCodeOfferStatus(code: string) {
+    return this.http.get<get<OfferStatus>>(`${this.appConfig.apiEndpoint}api/v1/Disk/GetCodeOfferStatus/${code}`);
+  }
+  public getfiles() {
+    // this.http.get<baseDto>(`${this.appConfig.apiEndpoint}api/v1/DBF/CreateDBF/0`);
+    // this.http.get<baseDto>(`${this.appConfig.apiEndpoint}api/v1/DBF/CreateDBF/1`);
+    this.http.get(`${this.appConfig.apiEndpoint}api/v1/Disk/download/0`, {
+      observe: 'response', responseType: 'blob'}
+     ).subscribe(response => {this.downLoadFile(response, 'DSKKAR00.dbf')});
+    this.http.get(`${this.appConfig.apiEndpoint}api/v1/Disk/download/1`, {
+      observe: 'response', responseType: 'blob'}
+     ).subscribe(response => this.downLoadFile(response, 'DSKWOR00.dbf'));
+  }
+  public getgetwayes() {
+   return this.http.get<gateways[]>(`${this.env.PayementUrl}ActiveGatWates`);
+  }
+  public getPaymentHisstory() {
+    return this.http.get<getlist<PaymentHisstory>>(`${this.appConfig.apiEndpoint}api/v1/Disk/GetLastPaymentHisstory`);
+  }
+  public getUserAccounting() {
+    return this.http.get<getlist<UserAccounting>>(`${this.appConfig.apiEndpoint}api/v1/Disk/GetUserAccounting`);
+  }
+  public getUserTikets() {
+    return this.http.get<getlist<TiketDto>>(`${this.appConfig.apiEndpoint}api/v1/Tiket`);
+  }
+  public getTiketContent(id: number) {
+    return this.http.get<get<TiketDto>>(`${this.appConfig.apiEndpoint}api/v1/Tiket/${id}`);
+  }
+  public addTicket(ticket: any) {
+    return this.http.post<get<TiketDto>>(`${this.appConfig.apiEndpoint}api/v1/Tiket/AddTiket`, ticket);
+  }
+  public addTicketContent(ticketContent: any, id: number) {
+    return this.http.post<get<TiketContentDto>>(`${this.appConfig.apiEndpoint}api/v1/Tiket/AddTiketContent/${id}` , ticketContent);
+  }
+
+
+
+
+  downLoadFile(data: any, type: string) {
+        const blob = new Blob([data.body]);
+        const url = window.URL.createObjectURL(blob);
+        const pwa = saveAs(url, type);
+        console.log(data.headers.get('content-disposition'));
+        // if (!pwa || pwa.closed || typeof pwa.closed === 'undefined') {
+        //     alert( 'Please disable your Pop-up blocker and try again.');
+        // }
+  }
 }
 
-
+export interface siteinfo {
+  isFree?: boolean;
+  fe?: number;
+}
 export interface UserBio{
 
   data: {
@@ -160,24 +235,25 @@ export interface baseDto{
   statusCode: boolean;
   message: string;
 }
+export interface UserBio1 {
+  id?: number;
+  fullName?: string;
+  isActive?: boolean;
+  rollName?: string[];
+  userPhone?: string;
+  emplyeCount?: number;
+  manufacturyCount?: number;
+  listCount?: number;
+  userWallet?: number;
+  userImage?: string;
+  tiketCount?: number;
+  tiketPendingCount?: number;
+}
 export interface UserBioInterFace{
-  data:
-    {
-      id: number;
-      fullName: string;
-      isActive: boolean;
-      rollName: string[];
-      userPhone: string;
-      emplyeCount: number;
-      manufacturyCount: number;
-      listCount: number;
-      userWallet: number;
-      userImage: string;
-    }
-   ;
-  isSuccess: true ;
-  statusCode: boolean ;
-  message: string;
+  data?: UserBio1;
+  isSuccess?: true ;
+  statusCode?: boolean ;
+  message?: string;
 }
 export interface getEmployee {
   data: Employee;
@@ -207,6 +283,7 @@ export interface Employee {
   listEmployeeID?: number;
   jobs?: jobs;
   id?: number;
+  isKarfarma?: boolean;
 }
 export interface getlist<key>{
   data: key[];
@@ -294,4 +371,67 @@ export interface WorkMonthDto {
   id?: number;
   karMonthDto?: KarMonthDto;
   employeeDto?: Employee;
+}
+export interface gateways {
+  name?: string;
+  value?: number;
+}
+export interface OfferStatus {
+  code?: string;
+  dateExpire?: Date;
+  countExpire?: number;
+  discription?: string;
+  offerRate?: number;
+  id?: number;
+  isactive?: boolean;
+}
+export interface PaymentHisstory {
+  isSucess?: true;
+  trackingnumber?: number;
+  transactioncode?: string;
+  userID?: number;
+  gateway?: string;
+  price?: number;
+  dateTime?: Date;
+  discription?: string;
+  offerCode?: string;
+  id?: number;
+}
+export interface UserAccounting {
+  userID?: number;
+  bedehkari?: number;
+  bestankar?: number;
+  discription?: string;
+  dateTime?: Date ;
+  id?: number;
+  userDto: {
+    phoneNumber: string,
+    email: string,
+    fullName: string
+  };
+}
+export interface TiketDto {
+  title?: string;
+  level?: number;
+  isAdminSide?: true;
+  userID?: number;
+  dataCreate?: Date;
+  dataModified?: Date;
+  user?: string;
+  tiketContents?: TiketContentDto[];
+  id?: number;
+  levelString?: string;
+  dataCreateString?: string;
+  dataModifiedstring?: string;
+}
+export interface TiketContentDto {
+  tiketId?: number;
+  isAdminSide?: true;
+  text?: string;
+  fileURL?: string;
+  dataCreate?: Date;
+  dataModified?: Date;
+  id?: number;
+  userID?: number;
+  user?: string;
 }

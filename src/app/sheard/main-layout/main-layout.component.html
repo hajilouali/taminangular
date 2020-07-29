@@ -1,3 +1,4 @@
+
 <body class="app sidebar-mini rtl">
   <!-- <div id="global-loader"></div> -->
   <div class="page">
@@ -24,10 +25,10 @@
               <div class="container">
                 <a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
 
-                <a class="navbar-brand" href="index-hlfh-2.html"> <img alt="..." class="navbar-brand-img main-logo"
+                <a class="navbar-brand" [routerLink]="['/Dashboard']" > <img alt="..." class="navbar-brand-img main-logo"
                     src="../../assets/img/brand/logo-dark.png">
                 </a>
-                <ul class="navbar-nav align-items-center d-none d-xl-block pr-4">
+                <!-- <ul class="navbar-nav align-items-center d-none d-xl-block pr-4">
                   <li class="nav-item dropdown">
                     <a aria-expanded="false" aria-haspopup="true" class="nav-link pr-md-0 d-none d-lg-block"
                       data-toggle="dropdown" href="#" role="button">
@@ -54,10 +55,10 @@
                       <a class="dropdown-item" href="#"><span>تنظیمات</span></a>
                     </div>
                   </li>
-                </ul>
+                </ul> -->
 
                 <!-- Form -->
-                <form class="navbar-search navbar-search-dark form-inline mr-3 ml-lg-auto">
+                <!-- <form class="navbar-search navbar-search-dark form-inline mr-3 ml-lg-auto">
                   <div class="form-group mb-0">
                     <div class="input-group input-group-alternative">
                       <div class="input-group-prepend">
@@ -65,132 +66,21 @@
                       </div><input class="form-control" placeholder="جستجو ..." type="text">
                     </div>
                   </div>
-                </form>
+                </form> -->
                 <!-- User -->
                 <ul class="navbar-nav align-items-center ">
-                  <li class="nav-item d-none d-md-flex">
-                    <div class="dropdown d-none d-md-flex mt-2 ">
-                      <a class="nav-link full-screen-link pl-0 pr-0"><i class="fe fe-maximize-2 floating "
-                          id="fullscreen-button"></i></a>
-                    </div>
-                  </li>
-                  <li class="nav-item dropdown d-none d-md-flex">
-                    <a aria-expanded="false" aria-haspopup="true" class="nav-link pr-0" data-toggle="dropdown" href="#"
-                      role="button">
-                      <div class="media align-items-center">
-                        <i class="fe fe-user "></i>
-                      </div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-arrow dropdown-menu-right">
-                      <a class="dropdown-item d-flex" href="#">
-                        <span class="avatar brround mr-3 align-self-center"> <img
-                            src="../../assets/img/faces/male/4.jpg" alt="imag"></span>
-                        <div>
-                          <strong>رضا کریمی</strong> برای شما درخواست دوستی ارسال کرد
-                          <div class=" mt-2 small text-muted">
-                            <span class="btn btn-sm btn-primary">قبول کردن</span>
-                            <span class="btn btn-sm btn-outline-primary">حذف</span>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="dropdown-item d-flex" href="#">
-                        <span class="avatar brround mr-3 align-self-center"><img
-                            src="../../assets/img/faces/female/14.jpg" alt="imag"></span>
-                        <div>
-                          <strong>نسترن</strong> برای شما درخواست دوستی ارسال کرد
-                          <div class=" mt-2 small text-muted">
-                            <span class="btn btn-sm btn-primary">قبول کردن</span>
-                            <span class="btn btn-sm btn-outline-primary">حذف</span>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="dropdown-item d-flex" href="#">
-                        <span class="avatar brround mr-3 align-self-center"><img src="../../assets/img/faces/male/1.jpg"
-                            alt="imag"></span>
-                        <div>
-                          <strong>امیر صبور</strong> برای شما درخواست دوستی ارسال کرد
-                          <div class=" mt-2 small text-muted">
-                            <span class="btn btn-sm btn-primary">قبول کردن</span>
-                            <span class="btn btn-sm btn-outline-primary">حذف</span>
-                          </div>
-                        </div>
-                      </a>
-                      <div class="dropdown-divider"></div><a class="dropdown-item text-center text-muted-dark"
-                        href="#">مشاهده همه
-                        درخواست ها</a>
-                    </div>
-                  </li>
 
-                  <li class="nav-item dropdown d-none d-md-flex">
-                    <a aria-expanded="false" aria-haspopup="true" class="nav-link pr-0" data-toggle="dropdown" href="#"
-                      role="button">
-                      <div class="media align-items-center">
-                        <i class="fe fe-mail "></i>
-                      </div>
-                    </a>
-                    <div class="dropdown-menu  dropdown-menu-lg dropdown-menu-arrow dropdown-menu-right">
-                      <a href="#" class="dropdown-item text-center">12 پیغام جدید</a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item d-flex">
-                        <span class="avatar brround mr-3 align-self-center"><img
-                            src="../../assets/img/faces/male/41.jpg" alt="img"></span>
-                        <div>
-                          <strong>نسترن : </strong> سلام با من تماس بگیر ...
-                          <div class="small text-muted">3 ساعت قبل</div>
-                        </div>
-                      </a>
-                      <a href="#" class="dropdown-item d-flex">
-                        <span class="avatar brround mr-3 align-self-center"><img
-                            src="../../assets/img/faces/female/1.jpg" alt="img"></span>
-                        <div>
-                          <strong>رضا : </strong> محصولات جدید ارسال شدند
-                          <div class="small text-muted">5 ساعت قبل</div>
-                        </div>
-                      </a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item text-center">مشاهده همه پیغام ها</a>
-                    </div>
-                  </li>
-                  <li class="nav-item dropdown d-none d-md-flex">
-                    <a aria-expanded="false" aria-haspopup="true" class="nav-link pl-0" data-toggle="dropdown" href="#"
-                      role="button">
-                      <div class="media align-items-center">
-                        <i class="fe fe-bell f-30 "></i>
-                      </div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-arrow dropdown-menu-right">
-                      <a href="#" class="dropdown-item d-flex">
-                        <div>
-                          <strong>تعدادی از پست های شما پسندیده شد</strong>
-                          <div class="small text-muted">5 ساعت قبل</div>
-                        </div>
-                      </a>
-                      <a href="#" class="dropdown-item d-flex">
-                        <div>
-                          <strong> 3 دیدگاه جدید</strong>
-                          <div class="small text-muted">3 ساعت قبل</div>
-                        </div>
-                      </a>
-                      <a href="#" class="dropdown-item d-flex">
-                        <div>
-                          <strong> محصول شما شما ثبت شد</strong>
-                          <div class="small text-muted">45 دقیقه قبل</div>
-                        </div>
-                      </a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item text-center">مشاهده همه اعلان ها</a>
-                    </div>
-                  </li>
                   <li class="nav-item dropdown">
                     <a aria-expanded="false" aria-haspopup="true" class="nav-link pr-md-0" data-toggle="dropdown"
                       href="#" role="button">
                       <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                          <img *ngIf="userdio.data.userImage" alt="Image placeholder" src="{{appConfig.apiEndpoint+ userdio.data.userImage}}">
-                          <i *ngIf="!userdio.data.userImage" class="fa fa-user"></i>
+                          <img *ngIf="userdio.userImage" alt="Image placeholder"
+                            src="{{appConfig.apiEndpoint+ userdio.userImage}}">
+                          <i *ngIf="!userdio.userImage" class="fa fa-user"></i>
                         </span>
                         <div class="media-body ml-2 d-none d-lg-block">
-                          <span class="mb-0 ">{{userdio.data.fullName}}</span>
+                          <span class="mb-0 ">{{userdio.fullName}}</span>
                         </div>
                       </div>
                     </a>
@@ -201,8 +91,7 @@
                       </div>
                       <a class="dropdown-item" routerLink="/Profile"><i class="ni ni-single-02"></i> <span>پروفایل
                           من</span></a>
-                      <a class="dropdown-item" href="#"><i class="ni ni-settings-gear-65"></i>
-                        <span>تنظیمات</span></a>
+
                       <div class="dropdown-divider"></div><a class="dropdown-item" (click)="logout()"><i
                           class="ni ni-user-run"></i> <span>خروج</span></a>
                     </div>
@@ -218,185 +107,39 @@
                 <nav class="horizontalMenu clearfix">
                   <div class="overlapblackbg"></div>
                   <ul class="horizontalMenu-list">
-                    <li aria-haspopup="true"><a href="#" class="sub-icon active"><i class="fe fe-home"></i> داشبورد</a>
-                      <ul class="sub-menu">
-                        <li aria-haspopup="true"><a href="index-hlfh-2.html">داشبور فروش
-                          </a></li>
-                        <li aria-haspopup="true"><a href="dashboard-social.html">داشبورد شبکه
-                            اجتماعی</a></li>
-                        <li aria-haspopup="true"><a href="dashboard-marketing.html">داشبورد
-                            بازاریابی</a></li>
-                        <li aria-haspopup="true"><a href="dashboard-it.html">داشبورد IT</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="dashboard-cryptocurrency.html">داشبورد
-                            ارز رمز نگاری</a>
-                        </li>
-                      </ul>
+                    <li aria-haspopup="true"><a [routerLink]="['/Dashboard']" routerLinkActive="active" class=""><i
+                          class="fe fe-home"></i> داشبورد</a>
+
                     </li>
-                    <li aria-haspopup="true"><a href="widgets.html" class=""><i class="fe fe-layers"></i> ویجت ها</a>
-                    </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-grid"></i> برنامه ها<span
+
+                    <li aria-haspopup="true"><a class="sub-icon"><i class="fe fe-users"></i> کارمندان<span
                           class="wsarrow"></span></a>
                       <ul class="sub-menu">
-                        <li aria-haspopup="true"><a href="cards.html">کارت ها</a></li>
-                        <li aria-haspopup="true"><a href="dragable-cards.html">کارت با قابلیت جا
-                            به جایی</a></li>
-                        <li aria-haspopup="true"><a href="full-calendar.html">تقویم</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="range-slider.html">اسلایدر محدوده</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="scroll-bar.html">پیمایش صفحه</a></li>
-                        <li aria-haspopup="true"><a href="sweet-alerts.html">هشدار شیرین</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="timeline.html">تایم لاین</a></li>
-                        <li aria-haspopup="true"><a href="users.html">کاربران</a></li>
+                        <li aria-haspopup="true"><a [routerLink]="['/EmployeeList']">مدیریت کارمندان</a></li>
+                        <li aria-haspopup="true"><a [routerLink]="['/ListEmployee']">تنظیمات لیست</a></li>
+
                       </ul>
                     </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-bar-chart-2"></i> نمودار
-                        ها<span class="wsarrow"></span></a>
-                      <ul class="sub-menu">
-                        <li aria-haspopup="true"><a href="chart-flot.html">نمودار Flot</a></li>
-                        <li aria-haspopup="true"><a href="chart-high.html">نمودار HighCharts</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="charts-chartjs.html">نمودار
-                            Chartjs</a></li>
-                        <li aria-haspopup="true"><a href="charts-echarts.html">نمودار Echart</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="charts-morris.html">نمودار Morris</a>
-                        </li>
-                      </ul>
+                    <li aria-haspopup="true"><a [routerLink]="['/ManufactureList']" routerLinkActive="active"
+                        class=""><i class="fas fa-city"></i> مدیریت کارگاه ها</a>
+
                     </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-copy"></i> عناصر طراحی<span
-                          class="wsarrow"></span></a>
-                      <div class="horizontal-megamenu clearfix">
-                        <div class="container">
-                          <div class="mega-menubg">
-                            <div class="row">
-                              <div class="col-lg-3 col-md-12 col-xs-12 link-list">
-                                <ul>
-                                  <li><a href="accordion.html">آکاردئون</a></li>
-                                  <li><a href="alerts.html">هشدار</a></li>
-                                  <li><a href="badges.html">نشان</a></li>
-                                  <li><a href="buttons.html">دکمه</a></li>
-                                  <li><a href="carousel.html">اسلایدر</a></li>
-                                  <li><a href="colors.html">رنگ ها</a></li>
-                                  <li><a href="dropdowns.html">منو کشویی</a></li>
-                                </ul>
-                              </div>
-                              <div class="col-lg-3 col-md-12 col-xs-12 link-list">
-                                <ul>
-                                  <li><a href="modal.html">مدال</a></li>
-                                  <li><a href="navigation.html">نوبار</a></li>
-                                  <li><a href="pagination.html">صفحه بندی</a></li>
-                                  <li><a href="popovers.html">محتوای عناصر
-                                      (Popovers)</a></li>
-                                  <li><a href="progress.html">پیشرفت</a></li>
-                                  <li><a href="tabs.html">تب ها</a></li>
-                                  <li><a href="tooltip.html">راهنمای ابزار
-                                      (Tooltip)</a></li>
-                                </ul>
-                              </div>
-                              <div class="col-lg-3 col-md-12 col-xs-12 link-list">
-                                <ul>
-                                  <li><a href="typography.html">تایپوگرافی</a></li>
-                                  <li><a href="grids.html">سیستم شبکه بندی</a></li>
-                                  <li><a href="email-inbox.html">صندوق دریافت
-                                      ایمیل</a></li>
-                                  <li><a href="email-compose.html">ایمیل</a></li>
-                                  <li><a href="gallery.html">گالری</a></li>
-                                  <li><a href="invoice.html">فاکتور</a></li>
-                                  <li><a href="pricing.html">پلن فروش</a></li>
-                                </ul>
-                              </div>
-                              <div class="col-lg-3 col-md-12 col-xs-12 link-list">
-                                <ul>
-                                  <li><a href="shop.html">محصولات</a></li>
-                                  <li><a href="cart.html">سبد خرید</a></li>
-                                  <li><a href="400.html">خطا 400</a></li>
-                                  <li><a href="404.html">خطا 404</a></li>
-                                  <li><a href="500.html">خطا 500</a></li>
-                                  <li><a href="505.html">خطا 505</a></li>
-                                  <li><a href="under-construction.html">در دست
-                                      ساخت</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <li aria-haspopup="true"><a [routerLink]="['/ListDisk']" routerLinkActive=" active" class=""><i
+                          class="fe fe-layout"></i> مدیریت لیست ها</a>
+
                     </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-database"></i> آیکون ها<span
+                    <li aria-haspopup="true"><a class="sub-icon"><i class="fas fa-donate"></i> مالی<span
                           class="wsarrow"></span></a>
                       <ul class="sub-menu">
-                        <li aria-haspopup="true"><a href="icons-feather.html">آیکون Feather</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="icons-fontawesome.html">آیکون فونت
-                            آوسوم</a></li>
-                        <li aria-haspopup="true"><a href="icons-ion.html">آیکون Ion</a></li>
-                        <li aria-haspopup="true"><a href="icons-materialdesign.html">آیکون
-                            Materialdesign</a></li>
-                        <li aria-haspopup="true"><a href="icons-nucleo.html">آیکون Nucleo</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="icons-pe7.html">آیکون pe7</a></li>
-                        <li aria-haspopup="true"><a href="icons-simpleline.html">آیکون
-                            Simpleline</a></li>
-                        <li aria-haspopup="true"><a href="icons-themify.html">آیکون Themify</a>
-                        </li>
+                        <li aria-haspopup="true"><a [routerLink]="['/UserAccountting']">مرور حساب</a></li>
+                        <li aria-haspopup="true"><a [routerLink]="['/Wallet']">شارژ کیف پول</a></li>
+
                       </ul>
                     </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-folder"></i> صفحات<span
-                          class="wsarrow"></span></a>
-                      <ul class="sub-menu">
-                        <li><a href="user-profile.html">پروفایل کاربر</a></li>
-                        <li><a href="empty.html">صفحه خالی</a></li>
-                        <li aria-haspopup="true" class="sub-menu-sub"><span class="horizontalMenu-click02"><i
-                              class="horizontalMenu-arrow fa fa-angle-down"></i></span><a href="#">جداول</a>
-                          <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="tables.html">جدول ساده</a>
-                            </li>
-                            <li aria-haspopup="true"><a href="datatable.html">جدول داده</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li aria-haspopup="true" class="sub-menu-sub"><span class="horizontalMenu-click02"><i
-                              class="horizontalMenu-arrow fa fa-angle-down"></i></span><a href="#">نقشه ها</a>
-                          <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="maps.html">نقشه گوگل</a>
-                            </li>
-                            <li aria-haspopup="true"><a href="vector-map.html">نقشه
-                                برداری</a></li>
-                          </ul>
-                        </li>
-                        <li aria-haspopup="true" class="sub-menu-sub"><span class="horizontalMenu-click02"><i
-                              class="horizontalMenu-arrow fa fa-angle-down"></i></span><a href="#">حساب کاربری</a>
-                          <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="login.html">ورود</a></li>
-                            <li aria-haspopup="true"><a href="register.html">ثبت نام</a>
-                            </li>
-                            <li aria-haspopup="true"><a href="forgot.html">فراموشی رمز
-                                عبور</a></li>
-                            <li aria-haspopup="true"><a href="lockscreen.html">صفحه قفل</a>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-edit"></i> فرم ها<span
-                          class="wsarrow"></span></a>
-                      <ul class="sub-menu">
-                        <li aria-haspopup="true"><a href="forms.html">فرم ساده</a></li>
-                        <li aria-haspopup="true"><a href="form-select2.html">فرم Select2</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="file-uploads.html">فرم بارگزاری</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="form-wizard.html">فرم چند مرحله ای</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="datepicker.html">فرم انتخاب تاریخ</a>
-                        </li>
-                        <li aria-haspopup="true"><a href="form-switches.html">سوئیچ ها</a>
-                        </li>
-                      </ul>
-                    </li>
+                    <li aria-haspopup="true"><a [routerLink]="['/TiketList']" routerLinkActive=" active" class=""><i
+                      class="fas fa-bookmark"></i> پشتیبانی</a>
+
+                </li>
                   </ul>
                 </nav>
                 <!--Menu HTML Code-->

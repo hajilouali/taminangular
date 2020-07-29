@@ -1,6 +1,7 @@
 import { ApiServiceService } from './../../core/_services/api-service.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { IAppConfig, APP_CONFIG } from 'src/app/app.config';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -20,14 +21,16 @@ export class LoginComponent implements OnInit {
     username: string,
     password: string
   };
-  constructor(private auth: ApiServiceService ,@Inject(APP_CONFIG) public appConfig: IAppConfig) { }
+  constructor(private spinner: NgxSpinnerService, private auth: ApiServiceService ,@Inject(APP_CONFIG) public appConfig: IAppConfig) { }
 
   ngOnInit(): void {
+    this.spinner.hide();
     localStorage.removeItem('token');
   }
 
   onSubmit() {
-    console.log(this.data);
+    this.spinner.show();
     this.auth.login(this.data);
+    this.spinner.hide();
   }
 }

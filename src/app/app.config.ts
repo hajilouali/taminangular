@@ -11,7 +11,7 @@ export interface IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  apiEndpoint: 'http://localhost:5000/',
+  apiEndpoint: 'https://api.apptamin.ir/',
   apiSettingsPath: 'ApiSettings',
   BaseURL: 'https://apptamin.ir',
   ForgetPasswordURL: 'https://apptamin.ir/resetpassword',

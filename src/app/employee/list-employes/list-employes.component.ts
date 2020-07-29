@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { error } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService, ListEmployee } from 'src/app/core/_services/api-service.service';
@@ -14,13 +15,16 @@ export class ListEmployesComponent implements OnInit {
   newcategory = false;
   datalist: ListEmployee = {};
   constructor(
+    private spiner: NgxSpinnerService,
     private api: ApiServiceService
   ) { }
 
   ngOnInit(): void {
+    this.spiner.show();
     this.api.GetListEmployeList().subscribe(res => {
       this.list = res.data;
     });
+    this.spiner.hide();
   }
   NewCategury() {
     this.datalist = {};
@@ -29,6 +33,7 @@ export class ListEmployesComponent implements OnInit {
 
   }
   delete(id: number) {
+    this.spiner.show();
     Swal.fire({
       title: 'آیا از پاک کردن این دسته بندی اطمینان دارید؟',
       text: 'در صورت این که کارمندی در این دسته بندی باشد ُ دسته بندی کاربران  بدون دسته بندی خواهد شد.',
@@ -52,6 +57,7 @@ export class ListEmployesComponent implements OnInit {
         });
       }
     });
+    this.spiner.hide();
   }
   edite(item: number) {
     this.newcategory = false;
@@ -60,23 +66,26 @@ export class ListEmployesComponent implements OnInit {
     this.display = true;
   }
   onSubmit() {
+    this.spiner.show();
     if (this.newcategory === true) {
       this.api.AddListEmployee(this.datalist).subscribe(res => {
-        this.api.GetListEmployeList().subscribe(ress => this.list = ress.data);
+        this.api.GetListEmployeList().subscribe(ress => {this.list = ress.data;this.spiner.hide();});
         this.display = false;
         this.datalist = {};
         this.newcategory = false;
+
       }, error => {
         console.log('مشکل در برقراری ارتباط با سرور ');
       });
     } else if (this.newcategory === false) {
       this.api.UpdateListEmployee(this.datalist).subscribe(res => {
-        this.api.GetListEmployeList().subscribe(ress => this.list = ress.data);
+        this.api.GetListEmployeList().subscribe(ress => {this.list = ress.data;this.spiner.hide();});
         this.display = false;
         this.datalist = {};
         this.newcategory = false;
       }, error => console.log('مشکل در برقراری ارتباط با سرور '));
     }
+
   }
   cloneListEmployee(c: ListEmployee): ListEmployee {
     const car:ListEmployee =  {};

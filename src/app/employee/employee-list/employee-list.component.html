@@ -1,4 +1,6 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > در حال بارگزاری... </p></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> در حال بارگزاری... </p>
+</ngx-spinner>
 
 <div class="card shadow">
   <div class="card-header">
@@ -21,9 +23,10 @@
               style="position: absolute; transform: translate3d(-65px, 27px, 0px); top: 0px; left: 0px; will-change: transform;">
               <a class="dropdown-item" (click)="showDialogToAdd()"><i class="fas fa-plus mr-2"></i>افزودن کارمند
                 جدید</a>
-              <a class="dropdown-item" (click)="addexcel()"><i class="fas fa-file-excel mr-2"></i>افزودن از فایل اکسل</a>
+              <a class="dropdown-item" (click)="addexcel()"><i class="fas fa-file-excel mr-2"></i>افزودن از فایل
+                اکسل</a>
               <a class="dropdown-item" (click)="adddbf()"><i class="fas fa-file mr-2"></i>افزودن از فایل بیمه
-                </a>
+              </a>
 
             </div>
           </div>
@@ -60,11 +63,11 @@
   [responsive]="true" showEffect="fade" [modal]="true" styleClass="mydialog">
 
 
-  <form name="form" #f="ngForm" novalidate>
+  <form name="form" #f="ngForm" novalidate class="mydialog">
 
     <div class="modal-body">
       <div class="p-grid ui-fluid" *ngIf="car">
-        <div class="row">
+        <div class="row" style="width: 100%;">
           <div class="col-md-4">
             <div class="col-md-12">
               <label for="year" class="form-label">نام</label>
@@ -114,13 +117,13 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" style="width: 100%;">
           <div class="col-md-4">
             <div class="col-md-12">
               <label for="color" class="form-label">شماره شناسنامه</label>
             </div>
             <div class="col-md-12">
-              <input type="text" required minlength="1" maxlength="10" pattern="[0-9]*" id="dsW_IDNO" name="dsW_IDNO"
+              <input type="text" required minlength="1" maxlength="30" pattern="[0-9]*" id="dsW_IDNO" name="dsW_IDNO"
                 #dsW_IDNO="ngModel" class="form-control" [(ngModel)]="car.dsW_IDNO"
                 [ngClass]="dsW_IDNO.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'" />
             </div>
@@ -163,7 +166,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" style="width: 100%;">
           <div class="col-md-4">
             <div class="col-md-12">
               <label for="color" class="form-label">تاریخ تولد</label>
@@ -191,7 +194,7 @@
                   <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
                 </ng-template>
                 <ng-template let-car pTemplate="item">
-                  <div class="ui-helper-clearfix">
+                  <div class="ui-helper-clearfix text-center">
                     <span style="vertical-align:middle; margin-left: .5em">{{car.title}}</span>-
                     <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
                   </div>
@@ -218,7 +221,7 @@
                   <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
                 </ng-template>
                 <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
-                  <div class="ui-helper-clearfix">
+                  <div class="ui-helper-clearfix text-center">
                     <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
                   </div>
                 </ng-template>
@@ -232,7 +235,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" style="width: 100%;">
           <div class=" col-md-6">
             <div class="col-md-12">
               <label for="vin" class="form-label">شماره بیمه</label>
@@ -258,10 +261,10 @@
                 [(ngModel)]="car.jobs" [suggestions]="results" (onSelect)="selectedjob($event)"
                 (completeMethod)="search($event)" field="code" placeholder="جستجو در مشاغل بیمه" [minLength]="3"
                 [ngClass]="jobs.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
-                <ng-template let-text pTemplate="item" style="width: 300px;border:none">
-                  <div class="">
-                    <div style="font-size:12px;float:right;margin:5px 5px 0 0">{{text.dsW_JOB}}</div>
-                    <div style="font-size:12px;float:right;margin:5px 5px 0 0">{{text.dsW_OCP}}</div>
+                <ng-template let-text pTemplate="item" style="width: 300px;border:none" inputStyle ="border:none" >
+                  <div style="border:none">
+                    <div style="font-size:12px;margin:5px 5px 0 0;text-align: center;border:none">{{text.dsW_JOB}} - {{text.dsW_OCP}}</div>
+                    <!-- <div style="font-size:12px;margin:5px 5px 0 0"></div> -->
                   </div>
                 </ng-template>
               </p-autoComplete>
@@ -275,30 +278,47 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" style="width: 100%;">
           <label>انتخاب دسته بندی</label>
           <p-dropdown [style]="{'width':'100%','height':'100%','border':'none'}" #listEmployeeID="ngModel"
             id="listEmployeeID" name="listEmployeeID" [options]="categurys" [(ngModel)]="car.listEmployeeID"
             filter="true"
             [ngClass]="listEmployeeID.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
             <ng-template let-item pTemplate="selectedItem" style="width: 300px">
-              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+              <span style="vertical-align:middle; margin-left: .5em;text-align: left;">{{item.label}}</span>
             </ng-template>
             <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
-              <div class="ui-helper-clearfix">
-                <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
+              <div class="ui-helper-clearfix text-center">
+                <span style="vertical-align:middle; margin-left: .5em; ">{{car.label}}</span>
               </div>
             </ng-template>
           </p-dropdown>
 
         </div>
+        <div class="row">
+
+          <div class="col-md-10">
+            <div class="form-group" style="padding: 10px;">
+              <p> آیا این کارمند کارفرما و یا عضوی از هیئت مدیره میباشد ؟
+
+                <br>
+                <span>در صورت انتخاب این گزینه این کارمند در محاسبه لیست حقوق بیمه بیکاری محاسبه نمیشود.</span>
+              </p>
+            </div>
+
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <input type="checkbox" style="margin: 10px;padding:20px;width: 20px;" class="form-control" [checked]="car.isKarfarma" (change)="changeStatus($event)">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
 
-      <button *ngIf="!newCar" type="button" pButton icon="pi pi-times"
-        (click)="delete()" label="حذف"></button>
-      <button type="button" [disabled]="f.form.pristine || f.form.invalid" class="btn btn-primary"
+      <button *ngIf="!newCar" type="button" pButton icon="pi pi-times" (click)="delete()" label="حذف"></button>
+      <button type="button" [disabled]=" f.form.invalid" class="btn btn-primary"
         (click)="save()">ذخیره</button>
     </div>
   </form>
@@ -311,50 +331,57 @@
     <ng-wizard-step [title]="'فایل نمونه'" [description]="'دانلود فایل نمونه'">
       <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
         aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
-        <h2>درباره من</h2>
-        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
-          ایپسوم
-          متن ساختگی با تولید سادگی نامفهوم.</p>
-
-        <div class="media-heading mt-3">
-          <h3><strong>بیوگرافی</strong></h3>
+        <p class="description text-center">
+         جهت دانلود نمونه فایل ارسال و فرم خام می توانید از لینک های زیر اقدام به دریافت نمایید.
+        </p>
+        <div class="text-center">
+          <a href="/assets/employe.xlsx">دانلود فرم خام ارسالی</a>
         </div>
-        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
-          ساختگی با تولید سادگی نامفهوم</p>
-        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم
-          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
-          با
-          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+        <div class="text-center">
+          <a href="/assets/sample.xlsx">دانلود فرم نمونه </a>
+        </div>
+
+<div>
+
+</div>
+
+
       </div>
     </ng-wizard-step>
     <ng-wizard-step [title]="' راهنما ارسال'" [description]="'راهنمای ارسال با اکسل'">
       <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
         aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
-        <h2>درباره من</h2>
-        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
-          ایپسوم
-          متن ساختگی با تولید سادگی نامفهوم.</p>
+        <h3>راهنمای تکمیل</h3>
+        <p>پس از دانلود فایل خام اطلاعات کارمندان را در در ردیف ها پر نموده . برای تکمیل اطلاعام لازم است ا
+          طلاعات در شیت 1 وبدون تغییر نام شیت و با فونت فارسی وارد نمود در ردیف کد شغل میبایست کد
+           شغل را به جای نام وارد نمود که می توان کد های رسوم مورد استفده را در زیر  مشاهده
+           نمود .</p>
+           <p>پس از تکمیل و ارسال قبل از تایید می توانید لیست کامندان را بنا بر نیاز در یکی از دسته بندی های ایجاد شده از قبل وارد نماید و پس از ارسال فایل نیز می توانید اطلاعات کارمندان را مشاهده و یا ویرایش کنید و سپس در صورت تایید بودن لیست  ثبت نمایید . </p>
+        <h3>کد شغلی مرسوم</h3>
+        <p>
 
-        <div class="media-heading mt-3">
-          <h3><strong>بیوگرافی</strong></h3>
-        </div>
-        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
-          ساختگی با تولید سادگی نامفهوم</p>
-        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم
-          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
-          با
-          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+          در نرم افزار لیست بیمه تامین اجتماعی در قسمت ثبت مشخصات کارکنان می بایست پس از شماره بیمه و نام و نام خانوادگی و … شغل بیمه شده را مشخص نمود. جستجو بر اساس عنوان شغل تا حدودی دشوار و وقتگیر است لذا می توانید مستقیما کد شغل را در قسمت مربوطه وارد نمایید.
+
+          در این بخش سعی شده است با توجه به تجربه چند ساله در تنظیم لیست بیمه، کاربردی ترین شغل ها به همراه کد آنها آورده شود.
+
+          کد  ۲۴۰۳۲  کارگر ساده         در اکثر لیست ها، این کد بکار می رود.
+        </p>
+          <p>کد &nbsp;27122 &nbsp;منشی &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;22020 &nbsp;فروشنده &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;27051 &nbsp;متصدی</p>
+          <p>کد &nbsp;24398 &nbsp;کارفرما &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; کد &nbsp;27075 &nbsp;مدیر&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد 14039 &nbsp;سرپرست</p>
+          <p>کد &nbsp;240 &nbsp;اموردفتری &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;24043 &nbsp;کارمند &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; کد 27084 &nbsp;مسئول</p>
+          <p>کد &nbsp;7005 &nbsp;حسابدار &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;11007 &nbsp;راننده &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;28047 &nbsp;نگهبان</p>
+          <p>کد &nbsp;24019 &nbsp;کارشناس &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; کد &nbsp;27081 &nbsp;مربی &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;27073 &nbsp;مدرس</p>
+          <p>کد &nbsp;1018 &nbsp;بازاریاب &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;24007 &nbsp;کارپرداز &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;8009 &nbsp;خدمتگزار</p>
+          <p>کد &nbsp;11014 &nbsp;رئیس &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; کد &nbsp;27151 &nbsp;مهندس &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; کد 27270 &nbsp;مدیرفروش</p>
+          <p>کد 3021 &nbsp;تکنسین &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;131 استادکار &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; کد &nbsp;28029 &nbsp;نصاب</p>
+          <p>کد &nbsp;32829 &nbsp;کارشناس فنی &nbsp; &nbsp;کد &nbsp;27098 &nbsp;مسئول فنی &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;24036 &nbsp;کارگر فنی</p>
+          <p>کد &nbsp;14041 &nbsp;سرپرست کارگاه &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;28005 &nbsp;ناظر &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;کد &nbsp;27152 &nbsp;مهندس پروژه</p>
+          <p>کد &nbsp;27079 &nbsp;مدیرعامل &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; کد &nbsp;11015 &nbsp;رئیس هیئت مدیره &nbsp; &nbsp; کد &nbsp;20010 &nbsp;عضو هیئت مدیره</p>
       </div>
     </ng-wizard-step>
     <ng-wizard-step [title]="'ارسال فایل'" [description]="'ارسال فایل اکسل'">
-      <div class="form-group">
-        <label>انتخاب دسته بندی</label>
+      <div class="form-group text-right" >
+        <label style="direction: rtl;text-align: right;">انتخاب دسته بندی</label>
         <p-dropdown [style]="{'width':'100%','height':'100%','border':'none'}" #listEmployeeID="ngModel"
           id="listEmployeeID" name="listEmployeeID" [options]="categurys" [(ngModel)]="categuryexcel" filter="true"
           [ngClass]="listEmployeeID.invalid ?'form-control is-invalid state-invalid':'form-control is-valid state-valid'">
@@ -362,7 +389,7 @@
             <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
           </ng-template>
           <ng-template let-car pTemplate="item" style="vertical-align:middle; margin-left: .5em">
-            <div class="ui-helper-clearfix">
+            <div class="ui-helper-clearfix text-center">
               <span style="vertical-align:middle; margin-left: .5em">{{car.label}}</span>
             </div>
           </ng-template>
@@ -395,7 +422,8 @@
   <div *ngIf="ExcelEmployee">
     <h3 class="first">مرور اطلاعات</h3>
     <p-table [value]="ExcelEmployee" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-      currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})" dataKey="id" editMode="row" [responsive]="true">
+      currentPageReportTemplate="از {first} تا {last} (تعداد کل:{totalRecords})" dataKey="id" editMode="row"
+      [responsive]="true">
       <ng-template pTemplate="header">
         <tr>
           <th style="width:4em">ردیف</th>
@@ -476,20 +504,21 @@
               </ng-template>
             </p-cellEditor>
           </td>
-         <td style="text-align: center;">
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="rowData.dSW_IDPLC" required>
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{rowData.dSW_IDPLC}}
-            </ng-template>
-          </p-cellEditor>
-         </td>
           <td style="text-align: center;">
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="text" [showMaskTyped]="true" [dropSpecialCharacters]="false" [clearIfNotMatch]="true" matInput mask="0000/M0/d0" [(ngModel)]="rowData.dSW_BDATE" required>
+                <input pInputText type="text" [(ngModel)]="rowData.dSW_IDPLC" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.dSW_IDPLC}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center;">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [showMaskTyped]="true" [dropSpecialCharacters]="false"
+                  [clearIfNotMatch]="true" matInput mask="0000/M0/d0" [(ngModel)]="rowData.dSW_BDATE" required>
               </ng-template>
               <ng-template pTemplate="output">
                 {{rowData.dSW_BDATE}}
@@ -531,7 +560,7 @@
           <td style="text-align:center">
             <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info"
               (click)="onRowEditInit(rowData)"></button>
-              <button *ngIf="!editing" pButton type="button"  icon="pi pi-times" class="ui-button-danger"
+            <button *ngIf="!editing" pButton type="button" icon="pi pi-times" class="ui-button-danger"
               (click)="onRowEditdelet(rowData)"></button>
             <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success"
               style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
@@ -544,14 +573,15 @@
         <div class="row">
           <div class="col-md-6">
             <button type="button" pButton icon="pi pi-forward" label="انصراف" (click)="clearExcelEmployee()"></button>
-        </div>
+          </div>
           <div class="col-md-6">
-              <button type="button" pButton icon="pi pi-check" label="ذخیره" class="ui-button-success" (click)="saveexcellist()"></button>
+            <button type="button" pButton icon="pi pi-check" label="ذخیره" class="ui-button-success"
+              (click)="saveexcellist()"></button>
           </div>
         </div>
 
 
-    </ng-template>
+      </ng-template>
     </p-table>
   </div>
 
@@ -562,50 +592,22 @@
 </p-dialog>
 <p-dialog header="افزودن از فایل DBF" [(visible)]="displayDialogFBF" [focusOnShow]="false" [responsive]="true"
   showEffect="fade" [modal]="true" styleClass="mydialog" [style]="{width:!ExcelEmployee? '50vw':'80vw'}">
-  <ng-wizard [config]="config" >
+  <ng-wizard [config]="config">
 
-    <ng-wizard-step [title]="'راهنمای فایل'" [description]="'دانلود فایل نمونه'">
-      <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
-        aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
-        <h2>درباره من</h2>
-        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
-          ایپسوم
-          متن ساختگی با تولید سادگی نامفهوم.</p>
 
-        <div class="media-heading mt-3">
-          <h3><strong>بیوگرافی</strong></h3>
-        </div>
-        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
-          ساختگی با تولید سادگی نامفهوم</p>
-        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم
-          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
-          با
-          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
-      </div>
-    </ng-wizard-step>
     <ng-wizard-step [title]="' راهنما ارسال'" [description]="'راهنمای ارسال با فایل DBF'">
       <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel"
         aria-labelledby="tabs-icons-text-1-tab" style="direction: rtl;text-align: justify;">
-        <h2>درباره من</h2>
-        <p class="description">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم
-          ایپسوم
-          متن ساختگی با تولید سادگی نامفهوم.</p>
+        <h2>راهنمای ارسال با فایل بیمه</h2>
+        <p class="description">
+          در این روش می توانید اطلاعات کارمندان را از فایل بیمه ارسال شده که عموماً با نام
+          DSKWOR
+           در ماه های قبل که توسط نرم افزار تامین اجتماعی و یا سایر نرم افزار ها آماده شده استخراج
+          و در لیست کارمندان خود وارد نماید . لازم به ذکر است اطلاعات وارد شده تکراری  ثبت نخواهد شد .
+        </p>
+<p>در این روش نیز می توان لیست وارد شده را بنا در بر نیاز شما در یکی از دسته بندی های آماده شده از قبل در سیستم ثبت نمود .</p>
+<p>پیشنهاد می شود پس از ورود کارمندان یکبار اطلاعات ثبت شده اعم از شغل کارمندان را مرور نمایید .</p>
 
-        <div class="media-heading mt-3">
-          <h3><strong>بیوگرافی</strong></h3>
-        </div>
-        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
-          ساختگی با تولید سادگی نامفهوم</p>
-        <p class="mb-4">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم
-          ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی
-          با
-          تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوملورم ایپسوم متن ساختگی با تولید سادگی
-          نامفهوملورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
       </div>
     </ng-wizard-step>
     <ng-wizard-step [title]="'ارسال فایل'" [description]="'ارسال فایل DBF'">
@@ -628,7 +630,8 @@
       <div style="direction: rtl;text-align: right;" class="form-group">
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupFileAddon01">DBF(فایل بیمه)افزودن دسته ای کارمندان با فایل</span>
+            <span class="input-group-text" id="inputGroupFileAddon01">DBF(فایل بیمه)افزودن دسته ای کارمندان با
+              فایل</span>
           </div>
           <div class="custom-file">
 
